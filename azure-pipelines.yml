@@ -35,5 +35,5 @@ stages:
         repository: '$(imageRepository)'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
-        buildContext: '$(Build.SourcesDirectory)/src/backend'
+        buildContext: '$(Build.SourcesDirectory)/backend'
         tags: '$(tag)'
