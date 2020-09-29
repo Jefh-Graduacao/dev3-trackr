@@ -7,11 +7,9 @@
         class="myml-ui-item__icon u-media-object__fit"
         style="position: relative"
       >
-        <a
-          href="https://produto.mercadolivre.com.br/MLB-1461454882-ducha-lorenzetti-duo-shower-multi-tem-quadrada-220v-6800w-_JM"
-        >
+        <a href="">
           <img
-            src="../assets/correios_logo.png"
+            :src="getLogoTransportadora()"
             alt="Transportadora Correios."
             width="70"
             height="70"
@@ -19,13 +17,16 @@
         </a>
       </div>
       <div class="myml-ui-item__info u-media-object__fill">
-        <a
-          class="myml-ui-item__name"
-          href="https://produto.mercadolivre.com.br/MLB-1461454882-ducha-lorenzetti-duo-shower-multi-tem-quadrada-220v-6800w-_JM"
-          >Encomenda: OP8050504545121BR</a
-        >
+        <a class="myml-ui-item__name" href="">Encomenda: OP8050504545121BR</a>
         <div class="myml-ui-item__description">
-          <p>Transportadora Correios - Inicio em 20/09/2020</p>
+          <p>
+            {{
+              "Transportadora " +
+              item.transportadora.nome +
+              " - Inicio em " +
+              item.inicio
+            }}
+          </p>
         </div>
       </div>
     </div>
@@ -39,7 +40,28 @@ import Vue from "vue";
 export default Vue.extend({
   name: "TrackItemContent",
   components: {},
-  props: {},
+  props: {
+    item: Object,
+  },
+  methods: {
+    getImgUrl: function (name) {
+      var images = require.context("../assets/transp", false, /\.png$/);
+      return images("./" + name + ".png");
+    },
+    getLogoTransportadora: function () {
+      switch (this.item.transportadora.nome) {
+        case "Correios":
+          return this.getImgUrl("correios_logo");
+        case "Jadlog":
+          return this.getImgUrl("jadlog-logo");
+        case "TNT":
+          return this.getImgUrl("tnt");
+
+        default:
+          return this.getImgUrl("caixa");
+      }
+    },
+  },
 });
 </script>
 

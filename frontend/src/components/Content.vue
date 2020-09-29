@@ -1,14 +1,8 @@
 <template>
   <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-    <div id="container">
+    <div id="container" v-if="items.length > 0">
       <h2>Rastreios</h2>
-      <TrackrItem></TrackrItem>
-      <TrackrItem></TrackrItem>
-      <TrackrItem></TrackrItem>
-      <TrackrItem></TrackrItem>
-      <TrackrItem></TrackrItem>
-      <TrackrItem></TrackrItem>
-      <TrackrItem></TrackrItem>
+      <TrackrItem v-for="ite in items" :key="ite" :item="ite"></TrackrItem>
     </div>
   </main>
 </template>
@@ -20,7 +14,9 @@ import TrackrItem from "./TrackrItem.vue";
 export default Vue.extend({
   name: "Content",
   components: { TrackrItem },
-  props: {},
+  props: {
+    items: Array,
+  },
 });
 </script>
 

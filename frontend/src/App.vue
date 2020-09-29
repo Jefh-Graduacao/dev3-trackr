@@ -4,7 +4,7 @@
     <div class="container-fluid">
       <div class="row">
         <MenuBar></MenuBar>
-        <Content></Content>
+        <Content :items="rastreios"></Content>
       </div>
     </div>
   </div>
@@ -19,6 +19,56 @@ import Content from "./components/Content.vue";
 export default Vue.extend({
   name: "App",
   components: { MenuBar, NavBar, Content },
+  data: function () {
+    return {
+      rastreios: [
+        {
+          codigo: "OP805455756BR",
+          inicio: "20/09/2020",
+          transportadora: {
+            nome: "Correios",
+          },
+          status: {
+            mensagem: "Em trasferência entre unidades.",
+            dataHora: "26/09/2020 ás 15:40",
+          },
+        },
+        {
+          codigo: "45454DD",
+          inicio: "20/09/2020",
+          transportadora: {
+            nome: "Expresso São Miguel",
+          },
+          status: {
+            mensagem: "Encomenda em rota de entrega.",
+            dataHora: "28/08/2020 ás 02:40",
+          },
+        },
+        {
+          codigo: "OP8789784564BR",
+          inicio: "15/08/2020",
+          transportadora: {
+            nome: "Jadlog",
+          },
+          status: {
+            mensagem: "Entregue ao destinatário.",
+            dataHora: "24/08/2020 ás 12:40",
+          },
+        },
+        {
+          codigo: "457855121EX",
+          inicio: "10/09/2020",
+          transportadora: {
+            nome: "TNT",
+          },
+          status: {
+            mensagem: "Entregue ao destinatário.",
+            dataHora: "21/09/2020 ás 10:40",
+          },
+        },
+      ],
+    };
+  },
 });
 </script>
 

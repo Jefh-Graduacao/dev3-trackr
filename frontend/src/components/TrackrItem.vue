@@ -1,8 +1,8 @@
 <template>
   <div id="main-track-item">
     <div class="ui-box ui-box--lite track-box">
-      <ItemTitle></ItemTitle>
-      <ItemContent></ItemContent>
+      <ItemTitle :item="item"></ItemTitle>
+      <ItemContent :item="item"></ItemContent>
     </div>
   </div>
 </template>
@@ -15,7 +15,9 @@ import ItemContent from "./TrackrItemContent";
 export default Vue.extend({
   name: "TrackrItem",
   components: { ItemTitle, ItemContent },
-  props: {},
+  props: {
+    item: Object,
+  },
 });
 </script>
 

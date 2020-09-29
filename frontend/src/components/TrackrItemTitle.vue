@@ -3,7 +3,7 @@
     <ItemButton></ItemButton>
     <div class="purchase-status__title-container">
       <h2 class="purchase-status__title purchase-status__title--black">
-        Em trasferência entre unidades.
+        {{ item.status.mensagem }}
       </h2>
       <span class="purchase-status__icon">
         <div class="purchase-status__icon-full">
@@ -20,7 +20,7 @@
       </span>
     </div>
     <p class="purchase-status__subtitle">
-      Atividade registrada em 26/09/2020 ás 15:40.
+      {{ "Atividade registrada em " + item.status.dataHora }}
     </p>
   </div>
 </template>
@@ -32,7 +32,9 @@ import ItemButton from "./TrackrItemButton";
 export default Vue.extend({
   name: "TrackItemTitle",
   components: { ItemButton },
-  props: {},
+  props: {
+    item: Object,
+  },
   data: function () {
     return {
       icon: "0",

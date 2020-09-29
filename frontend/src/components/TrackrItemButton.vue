@@ -1,7 +1,7 @@
 <template>
   <a
     class="ch-btn myml-ui-list-item-container__primary-action"
-    href="https://www.mercadolivre.com.br/returns/typification?order_id=4029808308&amp;ref=myml-listings_primary"
+    href=""
     target="_self"
     shipping-track=""
     shipping_path="SHIPPING_TRACK_LIST"
