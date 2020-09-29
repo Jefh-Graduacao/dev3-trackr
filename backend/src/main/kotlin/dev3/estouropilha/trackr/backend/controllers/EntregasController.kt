@@ -26,14 +26,13 @@ class EntregasController(private val sswCrawler: SswCrawler) {
         if (!Regex(CPF_REGEX).matches(cpf)) {
             throw ResponseStatusException(HttpStatus.BAD_REQUEST, "CPF inválido")
         }
-
-        val entregas = sswCrawler.consultarEntregas(cpf)
+        return ok(sswCrawler.consultarEntregas(cpf)
                 .map {
-                    EntregaDto(
-                            it.movimentacoes.map { m -> MovimentacaoDto(m.data, m.detalhes, m.unidade) }
-                    )
+                    EntregaDto(it.movimentacoes
+                            .map { movimentacao ->
+                                MovimentacaoDto(movimentacao.data, movimentacao.detalhes, movimentacao.unidade)
+                            })
                 }
-
-        return ok(entregas)
+        )
     }
 }

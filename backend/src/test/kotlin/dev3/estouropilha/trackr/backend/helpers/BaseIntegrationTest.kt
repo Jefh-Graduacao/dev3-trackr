@@ -20,7 +20,6 @@ class BaseIntegrationTest {
     @Autowired
     private lateinit var contexto: WebApplicationContext;
 
-    protected fun getMockMvc(): MockMvc
-        = MockMvcBuilders.webAppContextSetup(contexto).build()
+    protected fun getMockMvc() = MockMvcBuilders.webAppContextSetup(contexto).build()
 
 }

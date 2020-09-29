@@ -1,7 +1,7 @@
 package dev3.estouropilha.trackr.backend.crawlers.ssw
 
-import dev3.estouropilha.trackr.backend.crawlers.ssw.models.Entrega
-import dev3.estouropilha.trackr.backend.crawlers.ssw.models.Movimentacao
+import dev3.estouropilha.trackr.backend.models.Entrega
+import dev3.estouropilha.trackr.backend.models.Movimentacao
 import org.jsoup.Jsoup
 import org.springframework.beans.factory.annotation.Value
 import java.time.LocalDateTime
