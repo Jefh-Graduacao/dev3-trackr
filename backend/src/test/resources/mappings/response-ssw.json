@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/2/resultSSW_dest"
+  },
+  "response": {
+    "status": 200,
+    "body": "pong",
+    "headers": {
+      "Content-Type": "text/plain"
+    }
+  }
+}

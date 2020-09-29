@@ -8,20 +8,15 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 internal class EntregasControllerIntegrationTest : BaseIntegrationTest() {
 
-    @BeforeEach
-    fun setUp() {
-
-    }
-
     @Test
-    fun `Informar CPF inválido deve retornar BadRequest`() {
+    fun `Informar CPF invalido deve retornar BadRequest`() {
         getMockMvc()
                 .perform(get("/entregas/{cpf}", "123456789"))
                 .andExpect(status().isBadRequest)
     }
 
     @Test
-    fun `Informar CPF válido deve retornar entregas existentes`(cpf: String) {
+    fun `Informar CPF valido deve retornar entregas existentes`() {
         getMockMvc()
                 .perform(get("/entregas/{cpf}", "12345678999"))
                 .andExpect(status().isOk)
