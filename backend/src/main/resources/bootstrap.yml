@@ -13,5 +13,7 @@ spring:
         bootstrap-mode: default
     hibernate:
       dialect: org.hibernate.dialect.H2Dialect
+  main:
+    banner-mode: "off"
 ssw:
   url: https://ssw.inf.br
