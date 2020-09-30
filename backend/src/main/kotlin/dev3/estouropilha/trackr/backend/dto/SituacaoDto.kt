@@ -1,10 +1,10 @@
 package dev3.estouropilha.trackr.backend.dto
 
-import io.swagger.annotations.ApiParam
+import io.swagger.annotations.ApiModelProperty
 
 data class SituacaoDto(
-        @ApiParam(example = "Mouse XYZ")
+        @ApiModelProperty(example = "Mouse XYZ")
         val titulo: String,
-        @ApiParam(example = "Mouse Gamer - XYZ")
-        val descricao: String = ""
+        @ApiModelProperty(example = "Mouse Gamer - XYZ")
+        val descricao: String
 )
