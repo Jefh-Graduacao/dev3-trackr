@@ -14,7 +14,7 @@
 FROM gradle:6.6.1-jdk14 as builder
 WORKDIR /
 ADD . /
-RUN gradle build --stacktrace
+RUN gradle build -x test --stacktrace
 
 FROM openjdk:14-alpine
 WORKDIR /app

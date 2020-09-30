@@ -12,8 +12,8 @@ variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '875eaf54-c51b-42f4-beb9-af2b4f51a1c6'
   imageRepository: 'backend'
-  containerRegistry: 'dev3rastreio.azurecr.io'
-  dockerfilePath: '$(Build.SourcesDirectory)/src/backend/docker/Dockerfile'
+  containerRegistry: 'trackr.azurecr.io'
+  dockerfilePath: '$(Build.SourcesDirectory)/backend/docker/Dockerfile'
   tag: '$(Build.BuildId)'
   
   # Agent VM image name
@@ -27,13 +27,14 @@ stages:
     displayName: Build
     pool:
       vmImage: $(vmImageName)
-    steps:
+    steps:    
     - task: Docker@2
       displayName: Build and push an image to container registry
       inputs:
-        containerRegistry: '$(dockerRegistryServiceConnection)'
+        containerRegistry: 'trackr'
         repository: '$(imageRepository)'
         command: 'buildAndPush'
-        Dockerfile: '**/Dockerfile'
-        buildContext: '$(Build.SourcesDirectory)/src/backend'
+        Dockerfile: '$(dockerfilePath)'
+        buildContext: '$(Build.SourcesDirectory)/backend'
         tags: '$(tag)'
+    
