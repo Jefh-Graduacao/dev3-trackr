@@ -14,22 +14,23 @@ import org.springframework.web.server.ResponseStatusException
 @Api("Entregas")
 @RequestMapping("/entregas")
 class EntregasController(private val sswCrawler: SswCrawler) {
-    val CPF_REGEX = "^\\d{11}$"
+    private val cpfRegex = "^\\d{11}$"
 
     @GetMapping("/{cpf}")
     @CrossOrigin(origins = ["http://localhost:8081"])
     fun consultarPorCpf(@PathVariable("cpf")
                         cpf: String): ResponseEntity<List<EntregaDto>> {
 
-        if (!Regex(CPF_REGEX).matches(cpf)) {
+        if (!Regex(cpfRegex).matches(cpf)) {
             throw ResponseStatusException(HttpStatus.BAD_REQUEST, "CPF inválido")
         }
         return ok(sswCrawler.consultarEntregas(cpf)
                 .map {
-                    EntregaDto(it.movimentacoes
+                    EntregaDto(cpf,
+                            it.movimentacoes
                             .map { movimentacao ->
                                 MovimentacaoDto(movimentacao.data, movimentacao.detalhes, movimentacao.unidade)
-                            })
+                            }, "código")
                 }
         )
     }
