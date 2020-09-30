@@ -1,13 +1,15 @@
 package dev3.estouropilha.trackr.backend.crawlers.ssw
 
-import dev3.estouropilha.trackr.backend.crawlers.ssw.models.Movimentacao
-import dev3.estouropilha.trackr.backend.crawlers.ssw.models.Entrega
+import dev3.estouropilha.trackr.backend.models.Entrega
+import dev3.estouropilha.trackr.backend.models.Movimentacao
 import org.jsoup.Jsoup
+import org.springframework.beans.factory.annotation.Value
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class SswCrawler {
-    private val baseUrl = "https://ssw.inf.br"
+class SswCrawler() {
+    @Value("\${ssw.url}")
+    lateinit var baseUrl: String
 
     fun consultarEntregas(cpfDestinatario: String): List<Entrega> {
         val document = Jsoup.connect("${baseUrl}/2/resultSSW_dest")
@@ -28,7 +30,7 @@ class SswCrawler {
                                 tr.children().any { c -> c.hasClass("rastreamento") } && tr.children().count() >= 3
                             }
                             .map { linha ->
-                                val (data, unidade, detalhes) = linha.select("td").map { td ->
+                                val (data, detalhes, unidade) = linha.select("td").map { td ->
                                     td.select("p.tdb").text()
                                 }
 
