@@ -35,7 +35,8 @@ export default Vue.extend({
         this.$http.get(url).then(function (response) {
           if (response.status == 200) {
             vueSelf.errorSearch = false;
-            vueSelf.rastreios = response.data[0].movimentacoes;
+            // vueSelf.rastreios = response.data[0].movimentacoes;
+            console.log(response.data[0].movimentacoes);
           } else {
             vueSelf.errorSearch = true;
             vueSelf.rastreios = new Array();
@@ -82,6 +83,17 @@ export default Vue.extend({
           status: {
             mensagem: "Entregue ao destinatário.",
             dataHora: "24/08/2020 ás 12:40",
+          },
+        },
+        {
+          codigo: "ASDASDASd5454",
+          inicio: "10/09/2020",
+          transportadora: {
+            nome: "Cooperativa Rede Sul",
+          },
+          status: {
+            mensagem: "Entregue ao destinatário.",
+            dataHora: "21/09/2020 ás 10:40",
           },
         },
         {

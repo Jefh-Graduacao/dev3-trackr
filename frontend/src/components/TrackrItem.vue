@@ -3,6 +3,8 @@
     <div class="ui-box ui-box--lite track-box">
       <ItemTitle :item="item"></ItemTitle>
       <ItemContent :item="item"></ItemContent>
+
+      <!-- Colocar aqui novo componente para visualizar historico -->
     </div>
   </div>
 </template>

@@ -52,6 +52,8 @@ export default Vue.extend({
       switch (this.item.transportadora.nome) {
         case "Correios":
           return this.getImgUrl("correios_logo");
+        case "Cooperativa Rede Sul":
+          return this.getImgUrl("CoopRedeSul");
         case "Jadlog":
           return this.getImgUrl("jadlog-logo");
         case "TNT":
