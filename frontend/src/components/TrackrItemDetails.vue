@@ -9,7 +9,7 @@
             </h2>
             <span class="purchase-status__icon">
               <div class="purchase-status__icon-full">
-                <svg
+                <!-- <svg
                   width="50px"
                   height="20px"
                   viewBox="0 0 56 18"
@@ -21,7 +21,7 @@
                     width="50px"
                     height="20px"
                   />
-                </svg>
+                </svg> -->
               </div>
             </span>
           </div>

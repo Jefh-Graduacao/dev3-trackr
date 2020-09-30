@@ -3,7 +3,7 @@
     <ItemButton :id="id" @emit-value-id="emitClick"></ItemButton>
     <div class="purchase-status__title-container">
       <h2 class="purchase-status__title purchase-status__title--black">
-        {{ ite.titulo }}
+        {{ item.movimentacoes[0].titulo }}
       </h2>
       <span class="purchase-status__icon">
         <div class="purchase-status__icon-full">
@@ -20,10 +20,7 @@
       </span>
     </div>
     <p class="purchase-status__subtitle">
-      {{
-        "Atividade registrada em " +
-        item.movimentacoes[item.movimentacoes.length - 1].dataHora
-      }}
+      {{ "Atividade registrada em " + item.movimentacoes[0].dataHora }}
     </p>
   </div>
 </template>
