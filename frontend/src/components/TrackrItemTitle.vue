@@ -1,9 +1,9 @@
 <template>
   <div id="main-track-item-title" class="myml-ui-item-container__header">
-    <ItemButton></ItemButton>
+    <ItemButton :id="id" @emit-value-id="emitClick"></ItemButton>
     <div class="purchase-status__title-container">
       <h2 class="purchase-status__title purchase-status__title--black">
-        {{ item.status.mensagem }}
+        {{ ite.titulo }}
       </h2>
       <span class="purchase-status__icon">
         <div class="purchase-status__icon-full">
@@ -14,13 +14,16 @@
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <image href="../assets/Trackr.png" width="50px" height="20px" />
+            <image href="../assets/caixa.png" width="50px" height="20px" />
           </svg>
         </div>
       </span>
     </div>
     <p class="purchase-status__subtitle">
-      {{ "Atividade registrada em " + item.status.dataHora }}
+      {{
+        "Atividade registrada em " +
+        item.movimentacoes[item.movimentacoes.length - 1].dataHora
+      }}
     </p>
   </div>
 </template>
@@ -34,6 +37,12 @@ export default Vue.extend({
   components: { ItemButton },
   props: {
     item: Object,
+    id: Number,
+  },
+  methods: {
+    emitClick(id) {
+      this.$emit("emit-value-id", id);
+    },
   },
   data: function () {
     return {

@@ -21,10 +21,9 @@
         <div class="myml-ui-item__description">
           <p>
             {{
-              "Transportadora " +
-              item.transportadora.nome +
+              "Transportadora Correios" +
               " - Inicio em " +
-              item.inicio
+              item.movimentacoes[0].dataHora
             }}
           </p>
         </div>
@@ -49,9 +48,9 @@ export default Vue.extend({
       return images("./" + name + ".png");
     },
     getLogoTransportadora: function () {
-      switch (this.item.transportadora.nome) {
+      switch ("Correios") {
         case "Correios":
-          return this.getImgUrl("correios_logo");
+          return this.getImgUrl("Trackr_LOGO");
         case "Cooperativa Rede Sul":
           return this.getImgUrl("CoopRedeSul");
         case "Jadlog":

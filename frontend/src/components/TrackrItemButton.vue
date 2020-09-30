@@ -1,15 +1,15 @@
 <template>
   <a
     class="ch-btn myml-ui-list-item-container__primary-action"
-    href=""
     target="_self"
     shipping-track=""
     shipping_path="SHIPPING_TRACK_LIST"
     shipping_status="delivered/"
     shipping_substatus=""
     shipping_delayed="/"
-    >Ver Detalhes</a
-  >
+    v-on:click="emitClick(id)"
+    >Ver Detalhes
+  </a>
 </template>
 
 <script>
@@ -18,7 +18,13 @@ import Vue from "vue";
 export default Vue.extend({
   name: "TrackrItemButton",
   components: {},
-  props: {},
+  props: ["id"],
+  methods: {
+    emitClick(id) {
+      console.log(id);
+      this.$emit("emit-value-id", id);
+    },
+  },
 });
 </script>
 

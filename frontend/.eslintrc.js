@@ -30,5 +30,6 @@ module.exports = {
     '@typescript-eslint/no-array-constructor': 'off',
     'eqeqeq': 'off',
     '@typescript-eslint/no-this-alias': 'off',
+    'spaced-comment': 'off'
   }
 }

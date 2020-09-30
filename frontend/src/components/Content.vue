@@ -1,8 +1,16 @@
 <template>
   <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
     <div id="container" v-if="items.length > 0">
-      <h2>Rastreios</h2>
-      <TrackrItem v-for="ite in items" :key="ite" :item="ite"></TrackrItem>
+      <br />
+      <h2>Rastreios para {{ cpf }}</h2>
+      <br />
+      <TrackrItem
+        v-for="(ite, index) in items"
+        :key="ite"
+        :item="ite"
+        :id="index"
+        @emit-value-id="emitClick"
+      ></TrackrItem>
     </div>
   </main>
 </template>
@@ -16,6 +24,12 @@ export default Vue.extend({
   components: { TrackrItem },
   props: {
     items: Array,
+    cpf: String,
+  },
+  methods: {
+    emitClick(id) {
+      this.$emit("emit-value-id", id);
+    },
   },
 });
 </script>

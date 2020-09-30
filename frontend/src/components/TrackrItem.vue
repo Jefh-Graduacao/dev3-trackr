@@ -1,10 +1,8 @@
 <template>
   <div id="main-track-item">
     <div class="ui-box ui-box--lite track-box">
-      <ItemTitle :item="item"></ItemTitle>
+      <ItemTitle :item="item" :id="id" @emit-value-id="emitClick"></ItemTitle>
       <ItemContent :item="item"></ItemContent>
-
-      <!-- Colocar aqui novo componente para visualizar historico -->
     </div>
   </div>
 </template>
@@ -18,7 +16,21 @@ export default Vue.extend({
   name: "TrackrItem",
   components: { ItemTitle, ItemContent },
   props: {
-    item: Object,
+    item: {
+      type: Object,
+      required: true,
+    },
+    id: Number,
+  },
+  methods: {
+    ultimo() {
+      if (item.movimentacoes.length > 0) {
+        return item.movimentacoes[item.movimentacoes.length - 1];
+      }
+    },
+    emitClick(id) {
+      this.$emit("emit-value-id", id);
+    },
   },
 });
 </script>
