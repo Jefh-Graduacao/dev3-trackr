@@ -28,9 +28,10 @@ class EntregasController(private val sswCrawler: SswCrawler) {
                 .map {
                     EntregaDto(cpf,
                             it.movimentacoes
-                            .map { movimentacao ->
-                                MovimentacaoDto(movimentacao.data, movimentacao.detalhes, movimentacao.unidade)
-                            }, "código")
+                                    .sortedByDescending { mov -> mov.data }
+                                    .map { movimentacao ->
+                                        MovimentacaoDto(movimentacao.titulo, movimentacao.data, movimentacao.unidade, movimentacao.detalhes)
+                                    }, "código")
                 }
         )
     }
