@@ -1,10 +1,10 @@
 <template>
   <div id="main">
-    <NavBar nome="Trackr"></NavBar>
+    <NavBar nome="Trackr" @emit-value-bar="getValueBar"></NavBar>
     <div class="container-fluid">
       <div class="row">
         <MenuBar></MenuBar>
-        <Content :items="rastreios"></Content>
+        <Content v-if="searchValue != null" :items="rastreios"></Content>
       </div>
     </div>
   </div>
@@ -19,8 +19,14 @@ import Content from "./components/Content.vue";
 export default Vue.extend({
   name: "App",
   components: { MenuBar, NavBar, Content },
+  methods: {
+    getValueBar(value: null) {
+      this.searchValue = value;
+    },
+  },
   data: function () {
     return {
+      searchValue: null,
       rastreios: [
         {
           codigo: "OP805455756BR",

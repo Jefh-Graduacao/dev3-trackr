@@ -30,7 +30,8 @@
       type="text"
       placeholder="Pesquisar por CPF"
       aria-label="CPF"
-      v-on:keyup.enter="teste"
+      v-on:keyup.enter="emitValue(searchData)"
+      v-model="searchData"
     />
     <ul class="navbar-nav px-3">
       <li class="nav-item text-nowrap">
@@ -48,9 +49,15 @@ export default Vue.extend({
   props: {
     nome: String,
   },
+  data() {
+    return {
+      searchData: null,
+    };
+  },
   methods: {
-    teste: function () {
-      alert("Carregando...");
+    emitValue(value) {
+      this.$emit("emit-value-bar", value);
+      this.searchData = null;
     },
   },
 });
