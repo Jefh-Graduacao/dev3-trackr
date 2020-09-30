@@ -30,7 +30,7 @@ class SswCrawler() {
                                 tr.children().any { c -> c.hasClass("rastreamento") } && tr.children().count() >= 3
                             }
                             .map { linha ->
-                                val (data, unidade, detalhes) = linha.select("td").map { td ->
+                                val (data, detalhes, unidade) = linha.select("td").map { td ->
                                     td.select("p.tdb").text()
                                 }
 
