@@ -4,6 +4,10 @@
     <div class="container-fluid">
       <div class="row">
         <MenuBar></MenuBar>
+        <h3 v-show="errorSearch">
+          <br />
+          Não há resultados para a consulta de: {{ searchValue }}
+        </h3>
         <Content v-if="searchValue != null" :items="rastreios"></Content>
       </div>
     </div>
@@ -20,14 +24,33 @@ export default Vue.extend({
   name: "App",
   components: { MenuBar, NavBar, Content },
   methods: {
-    getValueBar(value: null) {
+    getValueBar(value: number) {
+      if (value == 41) {
+        this.rastreios = this.rastreiosTemp;
+      } else {
+        var vueSelf = this;
+        // var url = "http://localhost:8080/entregas/04000432036";
+        var url =
+          "https://raw.githubusercontent.com/Jefh-Graduacao/dev3-trackr/layout_componentes/frontend/src/assets/JsonExample.json";
+        this.$http.get(url).then(function (response) {
+          if (response.status == 200) {
+            vueSelf.errorSearch = false;
+            vueSelf.rastreios = response.data[0].movimentacoes;
+          } else {
+            vueSelf.errorSearch = true;
+            vueSelf.rastreios = new Array();
+          }
+        });
+      }
       this.searchValue = value;
     },
   },
   data: function () {
     return {
-      searchValue: null,
-      rastreios: [
+      errorSearch: false,
+      searchValue: 0,
+      rastreios: new Array(),
+      rastreiosTemp: [
         {
           codigo: "OP805455756BR",
           inicio: "20/09/2020",

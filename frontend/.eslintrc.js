@@ -26,6 +26,9 @@ module.exports = {
     'eol-last': 'off',
     'no-undef': 'off',
     '@typescript-eslint/no-use-before-define': 'off',
-    'space-before-function-paren': 'off'
+    'space-before-function-paren': 'off',
+    '@typescript-eslint/no-array-constructor': 'off',
+    'eqeqeq': 'off',
+    '@typescript-eslint/no-this-alias': 'off',
   }
 }
