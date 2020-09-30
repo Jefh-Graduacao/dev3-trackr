@@ -1,5 +1,6 @@
 package dev3.estouropilha.trackr.backend.controllers
 
+
 import dev3.estouropilha.trackr.backend.crawlers.ssw.SswCrawler
 import dev3.estouropilha.trackr.backend.dto.EntregaDto
 import dev3.estouropilha.trackr.backend.dto.MovimentacaoDto
@@ -7,31 +8,32 @@ import io.swagger.annotations.Api
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.http.ResponseEntity.ok
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
 
 @RestController
 @Api("Entregas")
 @RequestMapping("/entregas")
 class EntregasController(private val sswCrawler: SswCrawler) {
-    val CPF_REGEX = "^\\d{11}$"
+
+    private val cpfRegex = "^\\d{11}$"
 
     @GetMapping("/{cpf}")
+    @CrossOrigin(origins = ["http://localhost:8081"])
     fun consultarPorCpf(@PathVariable("cpf")
                         cpf: String): ResponseEntity<List<EntregaDto>> {
 
-        if (!Regex(CPF_REGEX).matches(cpf)) {
+        if (!Regex(cpfRegex).matches(cpf)) {
             throw ResponseStatusException(HttpStatus.BAD_REQUEST, "CPF inválido")
         }
         return ok(sswCrawler.consultarEntregas(cpf)
                 .map {
-                    EntregaDto(it.movimentacoes
-                            .map { movimentacao ->
-                                MovimentacaoDto(movimentacao.data, movimentacao.detalhes, movimentacao.unidade)
-                            })
+
+                    EntregaDto(cpf,
+                            it.movimentacoes
+                                    .map { movimentacao ->
+                                        MovimentacaoDto(movimentacao.data, movimentacao.detalhes, movimentacao.unidade)
+                                    }, "código")
                 }
         )
     }
