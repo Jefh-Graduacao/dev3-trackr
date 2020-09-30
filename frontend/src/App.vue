@@ -29,9 +29,9 @@ export default Vue.extend({
         this.rastreios = this.rastreiosTemp;
       } else {
         var vueSelf = this;
-        // var url = "http://localhost:8080/entregas/04000432036";
-        var url =
-          "https://raw.githubusercontent.com/Jefh-Graduacao/dev3-trackr/layout_componentes/frontend/src/assets/JsonExample.json";
+        var url = "http://localhost:8080/entregas/04000432036";
+        // var url =
+        //   "https://raw.githubusercontent.com/Jefh-Graduacao/dev3-trackr/layout_componentes/frontend/src/assets/JsonExample.json";
         this.$http.get(url).then(function (response) {
           if (response.status == 200) {
             vueSelf.errorSearch = false;
