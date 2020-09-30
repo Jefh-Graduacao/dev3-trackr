@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: dev3-trackr
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: sa
+  data:
+    jpa:
+      repositories:
+        bootstrap-mode: default
+    hibernate:
+      dialect: org.hibernate.dialect.H2Dialect
+ssw:
+  url: https://ssw.inf.br

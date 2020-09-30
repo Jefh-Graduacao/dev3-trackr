@@ -3,6 +3,7 @@ package dev3.estouropilha.trackr.backend.helpers
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
@@ -11,6 +12,7 @@ import org.springframework.web.context.WebApplicationContext
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
+@AutoConfigureWireMock(port = 8080)
 class BaseIntegrationTest {
     @Autowired
     private lateinit var mvc: MockMvc;
@@ -18,7 +20,6 @@ class BaseIntegrationTest {
     @Autowired
     private lateinit var contexto: WebApplicationContext;
 
-    protected fun getMockMvc(): MockMvc
-        = MockMvcBuilders.webAppContextSetup(contexto).build()
+    protected fun getMockMvc() = MockMvcBuilders.webAppContextSetup(contexto).build()
 
 }
