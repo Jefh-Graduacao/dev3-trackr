@@ -1,5 +1,7 @@
 # 🚚 Trackr
 
+[![Build Status](https://dev.azure.com/estouro-de-pilha/trackr/_apis/build/status/Backend?branchName=main)](https://dev.azure.com/estouro-de-pilha/trackr/_build/latest?definitionId=3&branchName=main) ![Azure Static Web Apps CI/CD](https://github.com/Jefh-Graduacao/dev3-trackr/workflows/Azure%20Static%20Web%20Apps%20CI/CD/badge.svg)
+
 ## Ferramentas para desenvolvimento
 
 | Aplicação | Link para download |
