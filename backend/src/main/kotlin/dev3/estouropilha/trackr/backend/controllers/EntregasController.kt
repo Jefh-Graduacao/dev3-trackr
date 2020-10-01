@@ -17,7 +17,7 @@ class EntregasController(private val sswCrawler: SswCrawler) {
     private val cpfRegex = "^\\d{11}$"
 
     @GetMapping("/{cpf}")
-    @CrossOrigin(origins = ["http://localhost:8081"])
+    @CrossOrigin(origins = ["http://localhost:8081", "https://trackr.wtf"])
     fun consultarPorCpf(@PathVariable("cpf")
                         cpf: String): ResponseEntity<List<EntregaDto>> {
 
