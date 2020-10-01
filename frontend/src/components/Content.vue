@@ -1,5 +1,5 @@
 <template>
-  <main role="main" class="col-md-9 pd_final col-lg-10 px-md-4">
+  <main role="main" class="center col-md-9 col-lg-10 px-md-4">
     <div id="container" v-if="items.length > 0">
       <br />
       <h2>Rastreios para {{ cpf }}</h2>
@@ -35,7 +35,7 @@ export default Vue.extend({
 </script>
 
 <style>
-.pd_final {
-  padding-left: 100px !important;
+.center {
+  margin: auto;
 }
 </style>
