@@ -44,9 +44,9 @@ export default Vue.extend({
         this.errorSearch = false;
         this.rastreios = this.rastreiosTemp;
       } else {
-        var vueSelf = this;
-        // var url = "http://localhost:8080/entregas/04000432036";
-        var url = "http://localhost:8080/entregas/" + value;
+        const vueSelf = this;
+
+        const url = `${process.env.VUE_APP_URL_BACKEND}/entregas/${value}`;
         this.$http.get(url).then(
           function (response) {
             if (response.status == 200) {
