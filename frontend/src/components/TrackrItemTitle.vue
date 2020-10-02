@@ -1,5 +1,5 @@
 <template>
-  <div id="main-track-item-title" class="myml-ui-item-container__header">
+  <div id="main-track-item-title">
     <ItemButton :id="id" @emit-value-id="emitClick"></ItemButton>
     <div class="purchase-status__title-container">
       <h2 class="purchase-status__title purchase-status__title--black">
