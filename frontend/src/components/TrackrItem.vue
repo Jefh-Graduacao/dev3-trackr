@@ -53,13 +53,13 @@ export default Vue.extend({
   margin-bottom: 15px;
   position: relative;
 }
-.track-box {
+/* .track-box {
   border: 1px solid #eee;
-  padding: 15px;
+
   margin-bottom: 25px;
   font-family: Arial, Helvetica, "Nimbus Sans L", sans-serif;
   font-size: 13px;
   line-height: 20px;
   color: #333;
-}
+} */
 </style>

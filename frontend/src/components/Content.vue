@@ -4,13 +4,13 @@
       <br />
       <h2>Rastreios para {{ cpf }}</h2>
       <br />
-      <TrackrItem
+      <Item
         v-for="(ite, index) in items"
         :key="ite"
         :item="ite"
         :id="index"
         @emit-value-id="emitClick"
-      ></TrackrItem>
+      ></Item>
     </div>
   </main>
 </template>
@@ -18,10 +18,11 @@
 <script>
 import Vue from "vue";
 import TrackrItem from "./TrackrItem.vue";
+import Item from "./Item"
 
 export default Vue.extend({
   name: "Content",
-  components: { TrackrItem },
+  components: { Item },
   props: {
     items: Array,
     cpf: String,
