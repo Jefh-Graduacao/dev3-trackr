@@ -5,9 +5,9 @@
       <h2>Rastreios para {{ cpf }}</h2>
       <br />
       <Item
-        v-for="(ite, index) in items"
-        :key="ite"
-        :item="ite"
+        v-for="(item, index) in items"
+        :key="item.id"
+        :item="item"
         :id="index"
         @emit-value-id="emitClick"
       ></Item>

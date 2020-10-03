@@ -1,9 +1,6 @@
 <template>
-  <button
-    :class="`btn btn-${tipo}`"
-    v-on:click="click"
-    >
-    {{ texto }}
+  <button :class="`btn btn-${tipo}`" @click="onClick">
+    <slot />
   </button>
 </template>
 
@@ -14,13 +11,8 @@ export default Vue.extend({
   name: "Botao",
   components: { },
   props: {
-    texto: String,
-    tipo: String
-  },
-  methods: {
-    click: function () {
-      alert(1)
-    }
+    tipo: String,
+    onClick: Function
   }
 })
 

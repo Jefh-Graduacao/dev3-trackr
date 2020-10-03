@@ -1,62 +1,20 @@
 <template>
   <div class="track-box-2">
     <div class="track-info">
-      <div class="track-title">
-        <h5>
-          {{ item.movimentacoes[0].titulo }}
-        </h5>
-        <p>
-          Atividade registrada em
-          {{
-            new Date(item.movimentacoes[0].dataHora).toLocaleString("pt-BR", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-              hour: "numeric",
-              minute: "numeric",
-            })
-          }}
-        </p>
-      </div>
-      <div class="track-events">
-        <div class="flex-teste">
-          <div class="boxxx">🚚</div>
-          <div class="track-events-details">
-            <p>{{ item.movimentacoes.length }} eventos registrados</p>
-            <p>
-              Primeiro evento em
-              {{
-                new Date(item.movimentacoes[0].dataHora).toLocaleString("pt-BR", {
-                  year: "numeric",
-                  month: "numeric",
-                  day: "numeric",
-                  hour: "numeric",
-                  minute: "numeric",
-                })
-              }}
-            </p>
-            <p>
-              Último evento em
-              {{
-                new Date(
-                  item.movimentacoes[item.movimentacoes.length - 1].dataHora
-                ).toLocaleString("pt-BR", {
-                  year: "numeric",
-                  month: "numeric",
-                  day: "numeric",
-                  hour: "numeric",
-                  minute: "numeric",
-                })
-              }}
-            </p>
-          </div>
-        </div>
-        <div class="track-buttons">
-          <Botao texto="Ver detalhes" tipo="primario" />
-          <Botao texto="Sincronizar" tipo="primario"/>
-          {{  }}
-        </div>
-      </div>
+      <TrackingHeading
+        :title="item.movimentacoes[0].titulo"
+        :subtitle="`Atividade registrada em
+          ${new Date(item.movimentacoes[0].dataHora).toLocaleString('pt-BR', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+          })}`"
+      />
+
+      <TrackingContent :item="item" />
+
     </div>
   </div>
 </template>
@@ -64,11 +22,13 @@
 <script lang="ts">
 import Vue from "vue";
 
-import Botao from './Botao.vue'
+import Botao from "./base/Botao.vue";
+import TrackingHeading from "./tracking-box/TrackingHeading.vue";
+import TrackingContent from "./tracking-box/TrackingContent.vue"
 
 export default Vue.extend({
   name: "Item",
-  components: { Botao },
+  components: { TrackingHeading, TrackingContent },
   props: {
     item: {
       type: Object,
@@ -77,6 +37,9 @@ export default Vue.extend({
     id: Number,
   },
   methods: {
+    click() {
+      alert("aaa");
+    },
     emitClick(id: number) {
       this.$emit("emit-value-id", id);
     },
@@ -92,7 +55,6 @@ export default Vue.extend({
 </script>
 
 <style>
-
 .track-box-2 {
   border: 1px solid #eee;
   padding: 15px;
@@ -120,15 +82,6 @@ export default Vue.extend({
 
 .track-buttons button:not(:last-child) {
   margin-bottom: 15px;
-}
-
-.track-title {
-  display: flex;
-  flex-direction: column;
-}
-
-.track-title h5, p {
-  margin: auto;
 }
 
 .flex-teste {
@@ -169,5 +122,4 @@ export default Vue.extend({
   font-size: 16px;
   line-height: 30px;
 }
-
 </style>
