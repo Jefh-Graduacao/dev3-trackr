@@ -4,8 +4,10 @@ import com.google.common.collect.Lists.newArrayList
 import dev3.estouropilha.trackr.backend.crawlers.CrawlerCodigo
 import dev3.estouropilha.trackr.backend.models.Entrega
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.stereotype.Service
 
-class CorreiosCrawler() : CrawlerCodigo {
+@Service
+class CorreiosCrawler : CrawlerCodigo {
     @Value("\${ssw.url}")
     private lateinit var baseUrl: String
 

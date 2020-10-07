@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service
 class EntregasServiceImpl(private val crawlerDocumentoService: CrawlerDocumentoService,
                           private val crawlerCodigoService: CrawlerCodigoService) : EntregasService {
 
-    override fun consultarEntregasPorCpf(cpfDestinatario: String) = crawlerDocumentoService.consultarEntregasPorCpf(cpfDestinatario)
+    override fun consultarEntregasPorCpf(cpfDestinatario: String)
+            = crawlerDocumentoService.consultarEntregasPorCpf(cpfDestinatario)
 
-    override fun consultarEntregasPorCodigoRastreioEOrigem(codigoRastreio: String, origem: TipoCrawlerPorCodigoEnum) = crawlerCodigoService.consultarEntregasPorCodigoECrawler(codigoRastreio, origem)
+    override fun consultarEntregasPorCodigoRastreioEOrigem(codigoRastreio: String, origem: TipoCrawlerPorCodigoEnum)
+            = crawlerCodigoService.consultarEntregasPorCodigoECrawler(codigoRastreio, origem)
 }
