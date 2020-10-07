@@ -1,10 +1,24 @@
 <template>
   <div id="main">
-    <NavBar nome="Track"></NavBar>
+    <NavBar nome="Trackr" @emit-value-bar="getValueBar"></NavBar>
     <div class="container-fluid">
       <div class="row">
-        <MenuBar></MenuBar>
-        <Content></Content>
+        <!-- <MenuBar></MenuBar> -->
+        <h3 v-show="errorSearch">
+          <br />
+          {{ mensagemError }}
+        </h3>
+        <Content
+          v-if="searchValue != null && !details"
+          :items="rastreios"
+          :cpf="searchValue"
+          @emit-value-id="emitClick"
+        ></Content>
+        <ContentDetails
+          v-if="details"
+          :item="rastreios[0]"
+          :cpf="searchValue"
+        ></ContentDetails>
       </div>
     </div>
   </div>
@@ -15,20 +29,257 @@ import Vue from "vue";
 import MenuBar from "./components/MenuBar.vue";
 import NavBar from "./components/NavBar.vue";
 import Content from "./components/Content.vue";
+import ContentDetails from "./components/ContentDetails.vue";
 
 export default Vue.extend({
   name: "App",
-  components: { MenuBar, NavBar, Content },
+  components: { NavBar, Content, ContentDetails },
+  methods: {
+    emitClick(id: number) {
+      this.details = true;
+    },
+    getValueBar(value: number) {
+      this.details = false;
+      if (value == 41) {
+        this.errorSearch = false;
+        this.rastreios = this.rastreiosTemp;
+      } else {
+        const vueSelf = this;
+
+        const url = `${process.env.VUE_APP_URL_BACKEND}/entregas/${value}`;
+        this.$http.get(url).then(
+          function (response) {
+            if (response.status == 200) {
+              vueSelf.errorSearch = false;
+              if (response.data && response.data.length > 0) {
+                vueSelf.rastreios = response.data;
+              } else {
+                vueSelf.errorSearch = true;
+                vueSelf.rastreios = [];
+                vueSelf.mensagemError =
+                  "Não há resultados para a consulta de " + vueSelf.searchValue;
+              }
+            }
+          },
+          function (response) {
+            vueSelf.errorSearch = true;
+            vueSelf.rastreios = [];
+            vueSelf.mensagemError =
+              "Informe um CPF válido para realizar a Consulta";
+          }
+        );
+      }
+      this.searchValue = value;
+    },
+  },
+  data: function () {
+    return {
+      details: false,
+      errorSearch: false,
+      searchValue: 0,
+      rastreios: new Array(),
+      mensagemError: "Não há resultados para a consulta de:",
+      rastreiosTemp: [
+        {
+          cpf: "03820790004",
+          movimentacoes: [
+            {
+              titulo: "MERCADORIA ENTREGUE",
+              dataHora: "2020-09-30T19:45:00",
+              local: "NOVO HAMBURGO / RS RED NHO",
+              situacao:
+                "ENTREGUE - INFORMADA ATRAVES DA CHAVE **********************0020010164858085480316 - MOBILE 5.",
+            },
+            {
+              titulo: "SAIDA PARA ENTREGA",
+              dataHora: "2020-09-30T02:09:00",
+              local: "NOVO HAMBURGO / RS RED NHO",
+              situacao: "Saida para entrega na cidade NOVO HAMBURGO.",
+            },
+            {
+              titulo: "CHEGADA EM UNIDADE",
+              dataHora: "2020-09-29T11:08:00",
+              local: "NOVO HAMBURGO / RS RED NHO",
+              situacao: "Chegada na unidade NOVO HAMBURGO em 29/09/20, 11:08h.",
+            },
+            {
+              titulo: "SAIDA DE UNIDADE",
+              dataHora: "2020-09-29T02:46:00",
+              local: "GRAVATAI / RS RED POT",
+              situacao:
+                "Saida da unidade GRAVATAI em 29/09/20, 02:46h. Previsao de chegada na unidade NOVO HAMBURGO em 29/09/20, 03:45h.",
+            },
+            {
+              titulo: "CHEGADA EM UNIDADE",
+              dataHora: "2020-09-28T12:37:00",
+              local: "GRAVATAI / RS RED POT",
+              situacao: "Chegada na unidade GRAVATAI em 28/09/20, 12:37h.",
+            },
+            {
+              titulo: "SAIDA DE UNIDADE",
+              dataHora: "2020-09-26T02:41:00",
+              local: "EXTREMA / MG RED EXT",
+              situacao:
+                "Saida da unidade EXTREMA em 26/09/20, 02:41h. Previsao de chegada na unidade GRAVATAI em 27/09/20, 00:41h.",
+            },
+            {
+              titulo: "MERCADORIA RECEBIDA PARA TRANSPORTE",
+              dataHora: "2020-09-25T12:28:00",
+              local: "EXTREMA / MG RED EXT",
+              situacao:
+                "CT-e autorizado com 1 volume e 1 Kg. Destino: RS/NOVO HAMBURGO. Previsao de entrega: 01/10/20.",
+            },
+          ],
+          codigo: "código",
+        },
+        {
+          cpf: "03820790004",
+          movimentacoes: [
+            {
+              titulo: "SAIDA DE UNIDADE",
+              dataHora: "2020-09-30T16:02:00",
+              local: "PALHOCA / SC RED FLP",
+              situacao:
+                "Saida da unidade PALHOCA em 30/09/20, 16:02h. Previsao de chegada na unidade GRAVATAI em 30/09/20, 23:02h.",
+            },
+            {
+              titulo: "CHEGADA EM UNIDADE",
+              dataHora: "2020-09-29T12:38:00",
+              local: "PALHOCA / SC RED FLP",
+              situacao: "Chegada na unidade PALHOCA em 29/09/20, 12:38h.",
+            },
+            {
+              titulo: "SAIDA DE UNIDADE",
+              dataHora: "2020-09-28T19:44:00",
+              local: "EXTREMA / MG RED EXT",
+              situacao:
+                "Saida da unidade EXTREMA em 28/09/20, 19:44h. Previsao de chegada na unidade PALHOCA em 29/09/20, 09:44h.",
+            },
+            {
+              titulo: "MERCADORIA RECEBIDA PARA TRANSPORTE",
+              dataHora: "2020-09-28T12:33:00",
+              local: "EXTREMA / MG RED EXT",
+              situacao:
+                "CT-e autorizado com 1 volume e 2 Kg. Destino: RS/NOVO HAMBURGO. Previsao de entrega: 02/10/20.",
+            },
+          ],
+          codigo: "código",
+        },
+        {
+          cpf: "03820790004",
+          movimentacoes: [
+            {
+              titulo: "MERCADORIA ENTREGUE",
+              dataHora: "2020-07-08T19:39:00",
+              local: "NOVO HAMBURGO / RS RED NHO",
+              situacao:
+                "ENTREGUE - INFORMADA ATRAVES DA CHAVE **********************0010040485841060823176 - MOBILE 5.",
+            },
+            {
+              titulo: "SAIDA PARA ENTREGA",
+              dataHora: "2020-07-06T17:21:00",
+              local: "NOVO HAMBURGO / RS RED NHO",
+              situacao: "Saida para entrega na cidade NOVO HAMBURGO.",
+            },
+            {
+              titulo: "CHEGADA EM UNIDADE",
+              dataHora: "2020-07-06T02:54:00",
+              local: "NOVO HAMBURGO / RS RED NHO",
+              situacao: "Chegada na unidade NOVO HAMBURGO em 06/07/20, 02:54h.",
+            },
+            {
+              titulo: "SAIDA DE UNIDADE",
+              dataHora: "2020-07-06T01:34:00",
+              local: "GRAVATAI / RS RED POT",
+              situacao:
+                "Saida da unidade GRAVATAI em 06/07/20, 01:34h. Previsao de chegada na unidade NOVO HAMBURGO em 06/07/20, 02:34h.",
+            },
+            {
+              titulo: "CHEGADA EM UNIDADE",
+              dataHora: "2020-07-04T14:55:00",
+              local: "GRAVATAI / RS RED POT",
+              situacao: "Chegada na unidade GRAVATAI em 04/07/20, 14:55h.",
+            },
+            {
+              titulo: "SAIDA DE UNIDADE",
+              dataHora: "2020-07-03T17:31:00",
+              local: "JUNDIAI / SP RED SPO",
+              situacao:
+                "Saida da unidade JUNDIAI em 03/07/20, 17:31h. Previsao de chegada na unidade GRAVATAI em 04/07/20, 13:31h.",
+            },
+            {
+              titulo: "MERCADORIA RECEBIDA PARA TRANSPORTE",
+              dataHora: "2020-07-03T13:53:00",
+              local: "JUNDIAI / SP RED SPO",
+              situacao:
+                "CT-e autorizado com 1 volume e 3 Kg. Destino: RS/NOVO HAMBURGO. Previsao de entrega: 09/07/20.",
+            },
+          ],
+          codigo: "código",
+        },
+        {
+          cpf: "03820790004",
+          movimentacoes: [
+            {
+              titulo: "MERCADORIA ENTREGUE",
+              dataHora: "2020-07-03T17:21:00",
+              local: "PORTO ALEGRE / RS DLG PNH",
+              situacao:
+                "Documento do recebedor CPF: ***.***.900-04 Relacao com o destinatario: Proprio destinatario Comentario: (recebido via SSW Ocorrencia WebAPI).",
+            },
+            {
+              titulo: "SAIDA PARA ENTREGA",
+              dataHora: "2020-07-02T08:52:00",
+              local: "PORTO ALEGRE / RS DLG PNH",
+              situacao: "Saida para entrega na cidade NOVO HAMBURGO.",
+            },
+            {
+              titulo: "CHEGADA EM UNIDADE",
+              dataHora: "2020-07-01T21:51:00",
+              local: "PORTO ALEGRE / RS DLG PNH",
+              situacao: "Chegada na unidade PORTO ALEGRE em 01/07/20, 21:51h.",
+            },
+            {
+              titulo: "SAIDA DE UNIDADE",
+              dataHora: "2020-07-01T21:05:00",
+              local: "PORTO ALEGRE / RS DLG POA",
+              situacao:
+                "Saida da unidade PORTO ALEGRE em 01/07/20, 21:05h. Previsao de chegada na unidade PORTO ALEGRE em 01/07/20, 23:00h.",
+            },
+            {
+              titulo: "CHEGADA EM UNIDADE",
+              dataHora: "2020-06-30T22:17:00",
+              local: "PORTO ALEGRE / RS DLG POA",
+              situacao: "Chegada na unidade PORTO ALEGRE em 30/06/20, 22:17h.",
+            },
+            {
+              titulo: "SAIDA DE UNIDADE",
+              dataHora: "2020-06-30T02:21:00",
+              local: "JUNDIAI / SP DLG JND",
+              situacao:
+                "Saida da unidade JUNDIAI em 30/06/20, 02:21h. Previsao de chegada na unidade PORTO ALEGRE em 30/06/20, 22:21h.",
+            },
+            {
+              titulo: "MERCADORIA RECEBIDA PARA TRANSPORTE",
+              dataHora: "2020-06-27T18:10:00",
+              local: "JUNDIAI / SP DLG JND",
+              situacao:
+                "CT-e autorizado com 1 volume e 1 Kg. Destino: RS/NOVO HAMBURGO. Previsao de entrega: 06/07/20.",
+            },
+          ],
+          codigo: "código",
+        },
+      ],
+    };
+  },
 });
 </script>
 
 <style>
-/* #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-} */
+body {
+  font-family: Arial, Helvetica, "Nimbus Sans L", sans-serif;
+  font-size: 13px;
+  line-height: 20px;
+  color: #333;
+}
 </style>

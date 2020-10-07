@@ -17,7 +17,7 @@ class EntregasController(private val entregasService: EntregasService) {
     private val cpfRegex = "^\\d{11}$"
 
     @GetMapping("/{cpf}")
-    @CrossOrigin(origins = ["http://localhost:8081"])
+    @CrossOrigin(origins = ["http://localhost:8081", "https://trackr.wtf"])
     fun consultarPorCpf(@PathVariable("cpf")
                         cpf: String): ResponseEntity<List<EntregaDto>> {
 
@@ -28,9 +28,10 @@ class EntregasController(private val entregasService: EntregasService) {
                 .map {
                     EntregaDto(cpf,
                             it.movimentacoes
-                            .map { movimentacao ->
-                                MovimentacaoDto(movimentacao.data, movimentacao.detalhes, movimentacao.unidade)
-                            }, "código")
+                                    .sortedByDescending { mov -> mov.data }
+                                    .map { movimentacao ->
+                                        MovimentacaoDto(movimentacao.titulo, movimentacao.data, movimentacao.unidade, movimentacao.detalhes)
+                                    }, "código")
                 }
         )
     }

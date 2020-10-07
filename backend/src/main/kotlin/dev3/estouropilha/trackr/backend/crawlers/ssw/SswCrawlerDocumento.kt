@@ -31,11 +31,18 @@ class SswCrawlerDocumento() : CrawlerDocumento {
                                 tr.children().any { c -> c.hasClass("rastreamento") } && tr.children().count() >= 3
                             }
                             .map { linha ->
-                                val (data, detalhes, unidade) = linha.select("td").map { td ->
+                                val (data, unidade, detalhes) = linha.select("td").map { td ->
                                     td.select("p.tdb").text()
                                 }
 
-                                Movimentacao(LocalDateTime.parse(data, DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), unidade, detalhes)
+                                var titulo = linha.select("td")[2].select("p.titulo").text()
+
+                                Movimentacao(
+                                        titulo,
+                                        LocalDateTime.parse(data, DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")),
+                                        unidade,
+                                        detalhes
+                                )
                             }
                     Entrega(detalhes)
                 }
