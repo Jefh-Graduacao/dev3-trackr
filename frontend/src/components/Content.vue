@@ -4,25 +4,24 @@
       <br />
       <h2>Rastreios para {{ cpf }}</h2>
       <br />
-      <Item
+      <TrackingItem
         v-for="(item, index) in items"
         :key="item.id"
         :item="item"
         :id="index"
         @emit-value-id="emitClick"
-      ></Item>
+      ></TrackingItem>
     </div>
   </main>
 </template>
 
 <script>
 import Vue from "vue";
-import TrackrItem from "./TrackrItem.vue";
-import Item from "./Item"
+import TrackingItem from "./tracking-box/TrackingItem"
 
 export default Vue.extend({
   name: "Content",
-  components: { Item },
+  components: { TrackingItem },
   props: {
     items: Array,
     cpf: String,

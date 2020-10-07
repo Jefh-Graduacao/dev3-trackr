@@ -52,6 +52,11 @@ export default Vue.extend({
   components: { Botao },
   props: {
     item: Object
+  },
+  methods: {
+    click: function() {
+      alert(1)
+    }
   }
 });
 </script>
