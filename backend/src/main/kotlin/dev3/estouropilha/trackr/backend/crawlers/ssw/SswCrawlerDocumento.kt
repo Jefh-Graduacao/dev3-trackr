@@ -1,5 +1,6 @@
 package dev3.estouropilha.trackr.backend.crawlers.ssw
 
+import dev3.estouropilha.trackr.backend.crawlers.CrawlerDocumento
 import dev3.estouropilha.trackr.backend.models.Entrega
 import dev3.estouropilha.trackr.backend.models.Movimentacao
 import org.jsoup.Jsoup
@@ -7,11 +8,11 @@ import org.springframework.beans.factory.annotation.Value
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class SswCrawler() {
+class SswCrawlerDocumento() : CrawlerDocumento {
     @Value("\${ssw.url}")
-    lateinit var baseUrl: String
+    private lateinit var baseUrl: String
 
-    fun consultarEntregas(cpfDestinatario: String): List<Entrega> {
+    override fun consultarEntregas(cpfDestinatario: String): List<Entrega> {
         val document = Jsoup.connect("${baseUrl}/2/resultSSW_dest")
                 .data("urlori", "/2/rastreamento_pf")
                 .data("cnpjdest", cpfDestinatario)
