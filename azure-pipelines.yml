@@ -12,6 +12,7 @@ trigger:
     exclude:
     - backend/README.md
     - backend/.gitignore
+    - backend/docker/compose-*.yml
 
 resources:
 - repo: self
