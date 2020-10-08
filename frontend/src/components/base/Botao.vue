@@ -36,14 +36,20 @@ export enum TipoBotao {
 }
 
 .btn-primario {
-    --btn-color: white;
-    --btn-bg: #f03a17;
-    --btn-border-color: var(--btn-bg);
+  --btn-color: white;
+  --btn-bg: #f03a17;
+  --btn-border-color: var(--btn-bg);
 }
 
 .btn-secundario {
-    --btn-color: white;
-    --btn-bg: rgb(52, 128, 68);
-    --btn-border-color: var(--btn-bg);
+  --btn-color: white;
+  --btn-bg: rgb(52, 128, 68);
+  --btn-border-color: var(--btn-bg);
+}
+
+.btn-terciario {
+  --btn-color: white;
+  --btn-bg: black;
+  --btn-border-color: #CCC;
 }
 </style>

@@ -1,5 +1,6 @@
 <template>
   <div class="tracking-events">
+    <TrackingDetailsModal v-if="showModal" @close="showModal = false" :movimentacoes="item.movimentacoes" />
     <div class="flex-teste2">
       <div class="boxxx">🚚</div>
       <div class="tracking-events-details">
@@ -36,9 +37,6 @@
       <Botao tipo="primario" :onClick="click">
         Ver detalhes
       </Botao>
-      <Botao tipo="primario" :onClick="click">
-        Sincronizar
-      </Botao>
     </div>
   </div>
 </template>
@@ -46,16 +44,22 @@
 <script lang="ts">
 import Vue from "vue";
 import Botao from "../base/Botao.vue"
+import TrackingDetailsModal from './TrackingDetailsModal.vue'
 
 export default Vue.extend({
   name: "TrackingContent",
-  components: { Botao },
+  components: { Botao, TrackingDetailsModal },
   props: {
     item: Object
   },
   methods: {
     click: function() {
-      alert(1)
+      this.showModal = true
+    }
+  },
+  data: function() {
+    return {
+      showModal: false
     }
   }
 });
@@ -67,7 +71,6 @@ export default Vue.extend({
   flex-direction: column;
   justify-content: flex-end;
   padding: 10px;
-  /* background: lightcoral; */
 }
 
 .tracking-buttons button:not(:last-child) {
@@ -85,13 +88,11 @@ export default Vue.extend({
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  /* background: lightgray; */
 }
 
 .tracking-events img {
   width: 100px;
   height: 100px;
-  /* background: lightgreen; */
 }
 
 .tracking-events .boxxx {
@@ -99,13 +100,10 @@ export default Vue.extend({
   height: 100px;
   font-size: 75px;
   line-height: 100%;
-  /* background: lightgreen; */
 }
 
 .tracking-events-details {
   margin: auto 0 auto 20px;
-  /* width: 75%; */
-  /* background: lightgoldenrodyellow; */
 }
 
 .tracking-events-details p {

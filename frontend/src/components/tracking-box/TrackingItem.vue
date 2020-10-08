@@ -41,10 +41,10 @@ export default Vue.extend({
 
 <style>
 .tracking-box {
-  border: 1px solid #eee;
+  border: 1px solid rgb(219, 219, 219);
+  border-radius: 3px;
   padding: 15px;
   margin-bottom: 25px;
-  font-family: "Poppins";
   font-size: 13px;
   line-height: 20px;
   color: #333;
