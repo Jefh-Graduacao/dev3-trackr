@@ -3,7 +3,16 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
 trigger:
-- main
+  branches:
+    include:
+    - main
+  paths:
+    include:
+    - backend/*
+    exclude:
+    - backend/README.md
+    - backend/.gitignore
+    - backend/docker/compose-*.yml
 
 resources:
 - repo: self
