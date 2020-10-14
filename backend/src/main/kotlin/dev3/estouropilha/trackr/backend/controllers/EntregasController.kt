@@ -1,6 +1,6 @@
 package dev3.estouropilha.trackr.backend.controllers
 
-import dev3.estouropilha.trackr.backend.crawlers.ssw.SswCrawler
+import dev3.estouropilha.trackr.backend.crawlers.SswCrawler
 import dev3.estouropilha.trackr.backend.dto.EntregaDto
 import dev3.estouropilha.trackr.backend.dto.MovimentacaoDto
 import io.swagger.annotations.Api
