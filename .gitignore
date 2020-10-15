@@ -1,4 +1,12 @@
-
 ### Eclipse ###
 .project
 .settings
+
+# IntelliJ
+**/.idea/
+
+# VS Code
+*.code-workspace
+
+# Gradle
+.gradle/
