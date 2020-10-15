@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Value
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class SswCrawlerDocumento() : CrawlerDocumento {
+class SswCrawler() : CrawlerDocumento {
     @Value("\${ssw.url}")
     private lateinit var baseUrl: String
 
