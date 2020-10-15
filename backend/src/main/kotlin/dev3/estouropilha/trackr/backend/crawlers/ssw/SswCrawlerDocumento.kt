@@ -13,12 +13,11 @@ class SswCrawlerDocumento() : CrawlerDocumento {
     private lateinit var baseUrl: String
 
     override fun consultarEntregas(cpfDestinatario: String): List<Entrega> {
-        val document = Jsoup.connect("${baseUrl}/2/resultSSW_dest")
+        return Jsoup.connect("${baseUrl}/2/resultSSW_dest")
                 .data("urlori", "/2/rastreamento_pf")
                 .data("cnpjdest", cpfDestinatario)
                 .post()
-
-        return document.select("a.email")
+                .select("a.email")
                 .map {
                     val onclickAttr = it.attr("onClick")
 
@@ -35,10 +34,8 @@ class SswCrawlerDocumento() : CrawlerDocumento {
                                     td.select("p.tdb").text()
                                 }
 
-                                var titulo = linha.select("td")[2].select("p.titulo").text()
-
                                 Movimentacao(
-                                        titulo,
+                                        linha.select("td")[2].select("p.titulo").text() ?: "",
                                         LocalDateTime.parse(data, DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")),
                                         unidade,
                                         detalhes

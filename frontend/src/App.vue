@@ -26,18 +26,14 @@
 
 <script lang="ts">
 import Vue from "vue";
-import MenuBar from "./components/MenuBar.vue";
+// import MenuBar from "./components/MenuBar.vue";
 import NavBar from "./components/NavBar.vue";
 import Content from "./components/Content.vue";
-import ContentDetails from "./components/ContentDetails.vue";
 
 export default Vue.extend({
   name: "App",
-  components: { NavBar, Content, ContentDetails },
+  components: { NavBar, Content },
   methods: {
-    emitClick(id: number) {
-      this.details = true;
-    },
     getValueBar(value: number) {
       this.details = false;
       if (value == 41) {
@@ -61,7 +57,7 @@ export default Vue.extend({
               }
             }
           },
-          function (response) {
+          function () {
             vueSelf.errorSearch = true;
             vueSelf.rastreios = [];
             vueSelf.mensagemError =
@@ -277,9 +273,10 @@ export default Vue.extend({
 
 <style>
 body {
-  font-family: Arial, Helvetica, "Nimbus Sans L", sans-serif;
+  font-family: "Poppins";
   font-size: 13px;
   line-height: 20px;
   color: #333;
+  background: #f3f5f9;
 }
 </style>

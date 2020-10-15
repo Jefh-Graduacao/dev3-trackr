@@ -1,27 +1,27 @@
 <template>
-  <main role="main" class="col-md-9 pd_final col-lg-10 px-md-4">
+  <main role="main" class="center col-md-9 col-lg-10 px-md-4">
     <div id="container" v-if="items.length > 0">
       <br />
       <h2>Rastreios para {{ cpf }}</h2>
       <br />
-      <TrackrItem
-        v-for="(ite, index) in items"
-        :key="ite"
-        :item="ite"
+      <TrackingItem
+        v-for="(item, index) in items"
+        :key="item.id"
+        :item="item"
         :id="index"
         @emit-value-id="emitClick"
-      ></TrackrItem>
+      ></TrackingItem>
     </div>
   </main>
 </template>
 
 <script>
 import Vue from "vue";
-import TrackrItem from "./TrackrItem.vue";
+import TrackingItem from "./tracking-box/TrackingItem"
 
 export default Vue.extend({
   name: "Content",
-  components: { TrackrItem },
+  components: { TrackingItem },
   props: {
     items: Array,
     cpf: String,
@@ -35,7 +35,7 @@ export default Vue.extend({
 </script>
 
 <style>
-.pd_final {
-  padding-left: 100px !important;
+.center {
+  margin: auto;
 }
 </style>
