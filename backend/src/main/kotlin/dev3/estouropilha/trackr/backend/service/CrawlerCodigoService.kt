@@ -4,6 +4,6 @@ import dev3.estouropilha.trackr.backend.enumeration.TipoCrawlerPorCodigoEnum
 import dev3.estouropilha.trackr.backend.models.Entrega
 
 interface CrawlerCodigoService {
-    fun consultarEntregasPorCodigoECrawler(codigoRastreio: String, tipoCrawlerPorCodigoEnum: TipoCrawlerPorCodigoEnum)
+    fun consultarEntregasPorCodigoECrawler(codigoRastreio: String, tipoCrawlerPorCodigo: TipoCrawlerPorCodigoEnum)
             : Entrega
 }

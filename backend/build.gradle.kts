@@ -28,6 +28,7 @@ dependencies {
     implementation("com.microsoft.sqlserver:mssql-jdbc")
     implementation("com.h2database:h2:1.4.196")
     implementation("org.jsoup:jsoup:1.13.1")
+    implementation("org.apache.commons:commons-collections4:4.0")
 
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.3.1")
     testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.3.1")

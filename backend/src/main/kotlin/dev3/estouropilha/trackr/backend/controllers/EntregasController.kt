@@ -2,13 +2,17 @@ package dev3.estouropilha.trackr.backend.controllers
 
 import dev3.estouropilha.trackr.backend.dto.EntregaDto
 import dev3.estouropilha.trackr.backend.dto.MovimentacaoDto
+import dev3.estouropilha.trackr.backend.dto.RastreioDocumentoDto
 import dev3.estouropilha.trackr.backend.service.EntregasService
 import io.swagger.annotations.Api
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.http.ResponseEntity.created
 import org.springframework.http.ResponseEntity.ok
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
+import java.lang.String.format
+import java.net.URI
 
 @RestController
 @Api("Entregas")
@@ -18,8 +22,7 @@ class EntregasController(private val entregasService: EntregasService) {
 
     @GetMapping("/{cpf}")
     @CrossOrigin(origins = ["http://localhost:8081", "https://trackr.wtf"])
-    fun consultarPorCpf(@PathVariable("cpf")
-                        cpf: String): ResponseEntity<List<EntregaDto>> {
+    fun consultarPorCpf(@PathVariable("cpf") cpf: String): ResponseEntity<List<EntregaDto>> {
 
         if (!Regex(cpfRegex).matches(cpf)) {
             throw ResponseStatusException(HttpStatus.BAD_REQUEST, "CPF inválido")
@@ -34,5 +37,12 @@ class EntregasController(private val entregasService: EntregasService) {
                                     }, "código")
                 }
         )
+    }
+
+    @PostMapping
+    @CrossOrigin(origins = ["http://localhost:8081", "https://trackr.wtf"])
+    fun vincularCodigoDeRastreioADocumento(@RequestBody rastreioDocumentoDto: RastreioDocumentoDto): ResponseEntity<List<EntregaDto>> {
+        entregasService.gravarVinculoRastreioDocumento(rastreioDocumentoDto)
+        return created(URI.create(format("/entregas/%s", rastreioDocumentoDto.numeroDocumento))).build()
     }
 }
