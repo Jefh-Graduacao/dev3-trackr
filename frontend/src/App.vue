@@ -34,45 +34,52 @@ export default Vue.extend({
   name: "App",
   components: { NavBar, Content },
   methods: {
-    getValueBar(value: number) {
+    getValueBar(obj: Object[]) {
       this.details = false;
-      if (value == 41) {
+      if (obj[1] == 41) {
         this.errorSearch = false;
         this.rastreios = this.rastreiosTemp;
       } else {
         const vueSelf = this;
 
-        const url = `${process.env.VUE_APP_URL_BACKEND}/entregas/${value}`;
-        this.$http.get(url).then(
-          function (response) {
-            if (response.status == 200) {
-              vueSelf.errorSearch = false;
-              if (response.data && response.data.length > 0) {
-                vueSelf.rastreios = response.data;
-              } else {
-                vueSelf.errorSearch = true;
-                vueSelf.rastreios = [];
-                vueSelf.mensagemError =
-                  "Não há resultados para a consulta de " + vueSelf.searchValue;
+        const url = `${process.env.VUE_APP_URL_BACKEND}/entregas/${obj[1]}`;
+        if (obj[0] == 1) {
+          console.log("TIPO DE CONSULTA CORREIOS...........endpoint back??");
+          alert("opa falta o endpoint");
+          // url = `${process.env.VUE_APP_URL_BACKEND}/entregas/${obj[1]}`;
+        } else {
+          this.$http.get(url).then(
+            function (response) {
+              if (response.status == 200) {
+                vueSelf.errorSearch = false;
+                if (response.data && response.data.length > 0) {
+                  vueSelf.rastreios = response.data;
+                } else {
+                  vueSelf.errorSearch = true;
+                  vueSelf.rastreios = [];
+                  vueSelf.mensagemError =
+                    "Não há resultados para a consulta de " +
+                    vueSelf.searchValue;
+                }
               }
+            },
+            function () {
+              vueSelf.errorSearch = true;
+              vueSelf.rastreios = [];
+              vueSelf.mensagemError =
+                "Informe um CPF válido para realizar a Consulta";
             }
-          },
-          function () {
-            vueSelf.errorSearch = true;
-            vueSelf.rastreios = [];
-            vueSelf.mensagemError =
-              "Informe um CPF válido para realizar a Consulta";
-          }
-        );
+          );
+        }
       }
-      this.searchValue = value;
+      this.searchValue = obj[1].toString();
     },
   },
   data: function () {
     return {
       details: false,
       errorSearch: false,
-      searchValue: 0,
+      searchValue: "",
       rastreios: new Array(),
       mensagemError: "Não há resultados para a consulta de:",
       rastreiosTemp: [
