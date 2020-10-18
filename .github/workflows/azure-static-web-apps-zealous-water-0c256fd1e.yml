@@ -4,29 +4,22 @@ on:
   push:
     branches:
       - main
-<<<<<<< HEAD
     paths-ignore:
       - 'backend/**'
-=======
     paths:
       - 'frontend/src/**'
       - 'frontend/public/**'
       - 'frontend/package.json'
->>>>>>> 2369ce7c53ce26fdc4059e446f745dbcc3b8b2ea
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
       - main
-<<<<<<< HEAD
     paths-ignore:
       - 'backend/**'
-=======
     paths:
       - 'frontend/src/**'
       - 'frontend/public/**'
       - 'frontend/package.json'
->>>>>>> 2369ce7c53ce26fdc4059e446f745dbcc3b8b2ea
-
 jobs:
   build_and_deploy_job:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
