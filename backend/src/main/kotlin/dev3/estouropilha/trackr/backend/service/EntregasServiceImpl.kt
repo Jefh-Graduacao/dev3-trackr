@@ -12,7 +12,7 @@ class EntregasServiceImpl(private val crawlerDocumentoService: CrawlerDocumentoS
                           private val rastreioDocumentoService: RastreioDocumentoService) : EntregasService {
 
     override fun consultarEntregasPorCpf(cpfDestinatario: String): List<Entrega> {
-        var entregasVinculadasAoDocumento = rastreioDocumentoService.consultarRastreiosPorDocumento(cpfDestinatario)
+        val entregasVinculadasAoDocumento = rastreioDocumentoService.consultarRastreiosPorDocumento(cpfDestinatario)
                 .map { consultarEntregasPorCodigoRastreioEOrigem(it.codigoRastreio, it.origem) }
 
         return ListUtils.union(crawlerDocumentoService.consultarEntregasPorCpf(cpfDestinatario),
@@ -20,7 +20,9 @@ class EntregasServiceImpl(private val crawlerDocumentoService: CrawlerDocumentoS
 
     }
 
-    override fun consultarEntregasPorCodigoRastreioEOrigem(codigoRastreio: String, origem: TipoCrawlerPorCodigoEnum) = crawlerCodigoService.consultarEntregasPorCodigoECrawler(codigoRastreio, origem)
+    override fun consultarEntregasPorCodigoRastreioEOrigem(codigoRastreio: String, origem: TipoCrawlerPorCodigoEnum): Entrega {
+        return crawlerCodigoService.consultarEntregasPorCodigoECrawler(codigoRastreio, origem)
+    }
 
     override fun gravarVinculoRastreioDocumento(rastreioDocumentoDto: RastreioDocumentoDto) {
         rastreioDocumentoService.gravarVinculoRastreioDocumento(rastreioDocumentoDto)
