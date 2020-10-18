@@ -50,30 +50,27 @@ internal class EntregasControllerIntegrationTest : BaseIntegrationTest() {
         inserirRastreioDocumento(rastreioDocumentoDto)
     }
 
-/*    @Test
+    @Test
     fun `Informar CPF valido deve retornar entregas existentes contendo as vinculadas ao CPF`() {
         //TODO remover quando a resposta estiver mockada via wiremock
         `when`(correiosCrawler.consultarEntregas("1234-ABC"))
                 .thenReturn(Entrega(listOf((Movimentacao("a", of(2020,10,18,17,1),
-                        "b", "C")))))
-        `when`(correiosCrawler.consultarEntregas("1234-ABC"))
-                .thenReturn(Entrega(listOf((Movimentacao("a", of(2020,10,18,17,1),
-                        "b", "C")))))
+                        "b", "c")))))
 
-        val rastreioDocumentoDto = RastreioDocumentoDto("11111111111", "1234-ABC", CORREIOS)
+        val rastreioDocumentoDto = RastreioDocumentoDto("12345678999", "1234-ABC", CORREIOS)
         inserirRastreioDocumento(rastreioDocumentoDto)
 
         getMockMvc()
-                .perform(get("/entregas/{cpf}", "11111111111"))
+                .perform(get("/entregas/{cpf}", "12345678999"))
                 .andExpect(status().isOk)
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$[0].cpf").value("11111111111"))
-                .andExpect(jsonPath("$[0].codigo").value("código"))
-                .andExpect(jsonPath("$[0].movimentacoes[0].titulo").value("11111111111"))
-                .andExpect(jsonPath("$[0].movimentacoes[0].dataHora").value("11111111111"))
-                .andExpect(jsonPath("$[0].movimentacoes[0].local").value("11111111111"))
-                .andExpect(jsonPath("$[0].movimentacoes[0].situacao").value("11111111111"))
-    }*/
+                .andExpect(jsonPath("$[1].cpf").value("12345678999"))
+                .andExpect(jsonPath("$[1].codigo").value("código"))
+                .andExpect(jsonPath("$[1].movimentacoes[0].titulo").value("a"))
+                .andExpect(jsonPath("$[1].movimentacoes[0].dataHora").value("2020-10-18T17:01:00"))
+                .andExpect(jsonPath("$[1].movimentacoes[0].local").value("b"))
+                .andExpect(jsonPath("$[1].movimentacoes[0].situacao").value("c"))
+    }
 
     private fun inserirRastreioDocumento(rastreioDocumentoDto: RastreioDocumentoDto) {
         getMockMvc()
