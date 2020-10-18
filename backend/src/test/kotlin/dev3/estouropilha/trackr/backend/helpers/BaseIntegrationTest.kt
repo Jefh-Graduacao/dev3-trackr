@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock
-import org.springframework.context.annotation.Profile
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
@@ -19,19 +18,17 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 const val LIMPAR_TABELAS = "../scripts/LIMPAR_TABELAS.sql"
-const val INSERIR_RASTREIO_DOCUMENTO = "../scripts/INSERIR_RASTREIO_DOCUMENTO.sql"
 
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @AutoConfigureWireMock(port = 8080)
-@Profile("test")
 class BaseIntegrationTest {
     @Autowired
-    private lateinit var mvc: MockMvc;
+    private lateinit var mvc: MockMvc
 
     @Autowired
-    private lateinit var contexto: WebApplicationContext;
+    private lateinit var contexto: WebApplicationContext
 
     protected fun getMockMvc() = MockMvcBuilders.webAppContextSetup(contexto).build()
 

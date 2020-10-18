@@ -7,8 +7,7 @@ import dev3.estouropilha.trackr.backend.repository.RastreioDocumentoRepository
 import org.springframework.stereotype.Service
 
 @Service
-class RastreioDocumentoServiceImpl(val rastreioDocumentoRepository: RastreioDocumentoRepository)
-    : RastreioDocumentoService {
+class RastreioDocumentoServiceImpl(val rastreioDocumentoRepository: RastreioDocumentoRepository) : RastreioDocumentoService {
 
     override fun gravarVinculoRastreioDocumento(rastreioDocumentoDto: RastreioDocumentoDto) {
         rastreioDocumentoRepository.save(

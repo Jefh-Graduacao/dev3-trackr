@@ -14,7 +14,6 @@ class EntregasServiceImpl(private val crawlerDocumentoService: CrawlerDocumentoS
     override fun consultarEntregasPorCpf(cpfDestinatario: String): List<Entrega> {
         val entregasVinculadasAoDocumento = rastreioDocumentoService.consultarRastreiosPorDocumento(cpfDestinatario)
                 .map { consultarEntregasPorCodigoRastreioEOrigem(it.codigoRastreio, it.origem) }
-
         return ListUtils.union(crawlerDocumentoService.consultarEntregasPorCpf(cpfDestinatario),
                 entregasVinculadasAoDocumento)
 

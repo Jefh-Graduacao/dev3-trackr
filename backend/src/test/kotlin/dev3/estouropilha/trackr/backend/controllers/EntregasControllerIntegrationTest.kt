@@ -1,20 +1,33 @@
 package dev3.estouropilha.trackr.backend.controllers
 
+import dev3.estouropilha.trackr.backend.crawlers.correios.CorreiosCrawler
+import dev3.estouropilha.trackr.backend.dto.EntregaDto
+import dev3.estouropilha.trackr.backend.dto.MovimentacaoDto
 import dev3.estouropilha.trackr.backend.dto.RastreioDocumentoDto
 import dev3.estouropilha.trackr.backend.enumeration.TipoCrawlerPorCodigoEnum.CORREIOS
 import dev3.estouropilha.trackr.backend.helpers.BaseIntegrationTest
-import dev3.estouropilha.trackr.backend.helpers.INSERIR_RASTREIO_DOCUMENTO
 import dev3.estouropilha.trackr.backend.helpers.LIMPAR_TABELAS
+import dev3.estouropilha.trackr.backend.models.Entrega
+import dev3.estouropilha.trackr.backend.models.Movimentacao
+import io.swagger.annotations.ApiModelProperty
 import org.junit.jupiter.api.Test
+import org.mockito.Mockito.`when`
+import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType
 import org.springframework.test.context.jdbc.Sql
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
+import java.time.LocalDateTime.now
+import java.time.LocalDateTime.of
 
 @Sql(scripts = [LIMPAR_TABELAS], executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 internal class EntregasControllerIntegrationTest : BaseIntegrationTest() {
+    //TODO implementar resposta via WireMock
+    @MockBean
+    private lateinit var correiosCrawler: CorreiosCrawler
+
     @Test
     fun `Informar CPF invalido deve retornar BadRequest`() {
         super.getMockMvc()
@@ -34,21 +47,42 @@ internal class EntregasControllerIntegrationTest : BaseIntegrationTest() {
     @Test
     fun `Deve vincular codigo de rastreio ao CPF retornando Created`() {
         val rastreioDocumentoDto = RastreioDocumentoDto("11111111111", "1234-ABC", CORREIOS)
-        getMockMvc()
-                .perform(post("/entregas")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(toJSON(rastreioDocumentoDto)))
-                .andExpect(status().isCreated)
+        inserirRastreioDocumento(rastreioDocumentoDto)
     }
 
-    @Test
-    @Sql(scripts = [INSERIR_RASTREIO_DOCUMENTO], executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-    fun `Deve vincular codigo de rastreio a CPF que já possuiu outros vinculos retornando Created`() {
+/*    @Test
+    fun `Informar CPF valido deve retornar entregas existentes contendo as vinculadas ao CPF`() {
+        //TODO remover quando a resposta estiver mockada via wiremock
+        `when`(correiosCrawler.consultarEntregas("1234-ABC"))
+                .thenReturn(Entrega(listOf((Movimentacao("a", of(2020,10,18,17,1),
+                        "b", "C")))))
+        `when`(correiosCrawler.consultarEntregas("1234-ABC"))
+                .thenReturn(Entrega(listOf((Movimentacao("a", of(2020,10,18,17,1),
+                        "b", "C")))))
+
         val rastreioDocumentoDto = RastreioDocumentoDto("11111111111", "1234-ABC", CORREIOS)
+        inserirRastreioDocumento(rastreioDocumentoDto)
+
+        getMockMvc()
+                .perform(get("/entregas/{cpf}", "11111111111"))
+                .andExpect(status().isOk)
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$[0].cpf").value("11111111111"))
+                .andExpect(jsonPath("$[0].codigo").value("código"))
+                .andExpect(jsonPath("$[0].movimentacoes[0].titulo").value("11111111111"))
+                .andExpect(jsonPath("$[0].movimentacoes[0].dataHora").value("11111111111"))
+                .andExpect(jsonPath("$[0].movimentacoes[0].local").value("11111111111"))
+                .andExpect(jsonPath("$[0].movimentacoes[0].situacao").value("11111111111"))
+    }*/
+
+    private fun inserirRastreioDocumento(rastreioDocumentoDto: RastreioDocumentoDto) {
         getMockMvc()
                 .perform(post("/entregas")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(toJSON(rastreioDocumentoDto)))
-                .andExpect(status().isCreated)
+                .andExpect {
+                    status().isCreated
+                    header().string("Location", "/entregas/11111111111")
+                }
     }
 }

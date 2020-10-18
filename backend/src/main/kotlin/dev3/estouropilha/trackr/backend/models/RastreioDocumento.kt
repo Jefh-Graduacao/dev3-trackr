@@ -9,11 +9,13 @@ data class RastreioDocumento(
         @field:Id
         @field:Column
         @field:GeneratedValue(strategy = GenerationType.IDENTITY)
-        val idRastreioDocumento: Long?,
+        val idRastreioDocumento: Long? = null,
         @field:Column
-        val numeroDocumento: String,
+        val numeroDocumento: String = "",
         @field:Column
-        val codigoRastreio: String,
+        val codigoRastreio: String = "",
         @field:Column
         @field:Enumerated(EnumType.STRING)
-        val origem: TipoCrawlerPorCodigoEnum)
+        val origem: TipoCrawlerPorCodigoEnum = TipoCrawlerPorCodigoEnum.CORREIOS) {
+
+}

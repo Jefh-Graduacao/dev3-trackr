@@ -10,11 +10,5 @@ spring:
     driverClassName: org.h2.Driver
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
-  data:
-    jpa:
-      repositories:
-        bootstrap-mode: default
-    hibernate:
-      dialect: org.hibernate.dialect.H2Dialect
 ssw:
   url: http://localhost:8080
