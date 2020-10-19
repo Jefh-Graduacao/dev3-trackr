@@ -132,7 +132,7 @@ a {
 }
 
 .bg-nav {
-  background-color: #cc1b1b !important;
+  background-color: #a61212 !important;
 }
 
 .form-control:focus {
@@ -145,7 +145,7 @@ a {
   border-bottom-width: 1px;
   border-radius: 0;
   padding-left: 25;
-  background-color: #cc1b1b !important;
+  background-color: #a61212 !important;
 }
 
 label:not(.input-group-text) {
@@ -153,7 +153,7 @@ label:not(.input-group-text) {
 }
 
 .my-select {
-  background-color: #cc1b1b;
+  background-color: #a61212;
   color: wheat;
   border: 0 none;
   border-radius: 20px;
