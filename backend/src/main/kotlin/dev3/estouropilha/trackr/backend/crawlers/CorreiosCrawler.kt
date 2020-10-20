@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter
 import java.util.regex.Pattern
 
 class CorreiosCrawler {
-    fun consultarEntregas(codigoRastreio: String): Entrega {
+    fun consultarEntrega(codigoRastreio: String): Entrega {
         val movimentacoes = Jsoup.connect("https://www2.correios.com.br/sistemas/rastreamento/ctrl/ctrlRastreamento.cfm")
                 .data("acao", "track")
                 .data("objetos", codigoRastreio)
@@ -30,7 +30,7 @@ class CorreiosCrawler {
                             lbEvent.select("strong").text(),
                             LocalDateTime.parse(data, DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")),
                             local,
-                            Regex("(?<=<br>)[\\s\\S]*").find(lbEvent.html())?.groupValues?.first() ?: ""
+                            Regex("(?<=<br>)[\\s\\S]*").find(lbEvent.html())?.groupValues?.first()?.trim() ?: ""
                     )
                 }
         
