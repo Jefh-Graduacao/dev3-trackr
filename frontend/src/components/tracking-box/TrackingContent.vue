@@ -1,12 +1,30 @@
 <template>
   <div class="tracking-events">
-    <TrackingDetailsModal v-if="showModal" @close="showModal = false" :movimentacoes="item.movimentacoes" />
+    <TrackingDetailsModal
+      v-if="showModal"
+      @close="showModal = false"
+      :movimentacoes="item.movimentacoes"
+    />
     <div class="flex-teste2">
-      <div class="boxxx">🚚</div>
+      <TrackingContentLogo
+        :title="item.movimentacoes[0].titulo"
+      ></TrackingContentLogo>
       <div class="tracking-events-details">
         <p>{{ item.movimentacoes.length }} eventos registrados</p>
         <p>
           Último evento em
+          {{
+            new Date(item.movimentacoes[0].dataHora).toLocaleString("pt-BR", {
+              year: "numeric",
+              month: "numeric",
+              day: "numeric",
+              hour: "numeric",
+              minute: "numeric",
+            })
+          }}
+        </p>
+        <p>
+          Primeiro evento em
           {{
             new Date(
               item.movimentacoes[item.movimentacoes.length - 1].dataHora
@@ -19,49 +37,36 @@
             })
           }}
         </p>
-        <p>
-          Primeiro evento em
-          {{
-            new Date(item.movimentacoes[0].dataHora).toLocaleString("pt-BR", {
-              year: "numeric",
-              month: "numeric",
-              day: "numeric",
-              hour: "numeric",
-              minute: "numeric",
-            })
-          }}
-        </p>
       </div>
     </div>
     <div class="tracking-buttons">
-      <Botao tipo="primario" :onClick="click">
-        Ver detalhes
-      </Botao>
+      <Botao tipo="primario" :onClick="click"> Ver detalhes </Botao>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import Botao from "../base/Botao.vue"
-import TrackingDetailsModal from './TrackingDetailsModal.vue'
+import Botao from "../base/Botao.vue";
+import TrackingDetailsModal from "./TrackingDetailsModal.vue";
+import TrackingContentLogo from "./TrackingContentLogo.vue";
 
 export default Vue.extend({
   name: "TrackingContent",
-  components: { Botao, TrackingDetailsModal },
+  components: { Botao, TrackingDetailsModal, TrackingContentLogo },
   props: {
-    item: Object
+    item: Object,
   },
   methods: {
-    click: function() {
-      this.showModal = true
-    }
+    click: function () {
+      this.showModal = true;
+    },
   },
-  data: function() {
+  data: function () {
     return {
-      showModal: false
-    }
-  }
+      showModal: false,
+    };
+  },
 });
 </script>
 
