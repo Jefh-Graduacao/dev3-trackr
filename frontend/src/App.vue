@@ -6,7 +6,7 @@
         <!-- <MenuBar></MenuBar> -->
         <h3 v-show="errorSearch">
           <br />
-          {{ mensagemError }}
+          <div class="center">{{ mensagemError }}</div>
         </h3>
         <Content
           v-if="searchValue != null && !details"
@@ -34,15 +34,21 @@ export default Vue.extend({
   name: "App",
   components: { NavBar, Content },
   methods: {
-    getValueBar(value: number) {
+    getValueBar(obj: Object[]) {
       this.details = false;
-      if (value == 41) {
+      if (obj[1] == 41) {
         this.errorSearch = false;
         this.rastreios = this.rastreiosTemp;
+        this.searchValue = obj[1].toString();
       } else {
         const vueSelf = this;
 
-        const url = `${process.env.VUE_APP_URL_BACKEND}/entregas/${value}`;
+        const url = `${this.getURL(obj[0])}/${obj[1]}`;
+        if (obj[0] == 1) {
+          console.log("TIPO DE CONSULTA CORREIOS...........endpoint back??");
+          alert("opa falta o endpoint");
+          return;
+        }
         this.$http.get(url).then(
           function (response) {
             if (response.status == 200) {
@@ -61,18 +67,31 @@ export default Vue.extend({
             vueSelf.errorSearch = true;
             vueSelf.rastreios = [];
             vueSelf.mensagemError =
-              "Informe um CPF válido para realizar a Consulta";
+              "Informe um dado válido para realizar a Consulta";
+            alert("Dado informado não é válido para esta consulta.");
           }
         );
+        this.searchValue = obj[1].toString();
       }
-      this.searchValue = value;
+    },
+    getURL(id: Object) {
+      switch (id) {
+        case 0:
+          //Por CPF
+          return `${process.env.VUE_APP_URL_BACKEND}/entregas/`;
+        case 1:
+          //Por Correios
+          return `${process.env.VUE_APP_URL_BACKEND}/entregas/?`;
+        default:
+          break;
+      }
     },
   },
   data: function () {
     return {
       details: false,
       errorSearch: false,
-      searchValue: 0,
+      searchValue: "",
       rastreios: new Array(),
       mensagemError: "Não há resultados para a consulta de:",
       rastreiosTemp: [

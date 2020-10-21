@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 class CrawlerCodigoServiceImpl(private val correiosCrawler: CorreiosCrawler) : CrawlerCodigoService {
     override fun consultarEntregasPorCodigoECrawler(codigoRastreio: String, tipoCrawlerPorCodigo: TipoCrawlerPorCodigoEnum): Entrega {
         when (tipoCrawlerPorCodigo) {
-            CORREIOS -> return correiosCrawler.consultarEntregas(codigoRastreio)
+            CORREIOS -> return correiosCrawler.consultarEntrega(codigoRastreio)
         }
     }
 }

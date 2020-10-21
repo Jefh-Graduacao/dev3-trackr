@@ -5,10 +5,12 @@ import dev3.estouropilha.trackr.backend.models.Entrega
 import dev3.estouropilha.trackr.backend.models.Movimentacao
 import org.jsoup.Jsoup
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class SswCrawler() : CrawlerDocumento {
+@Component
+class SswCrawler : CrawlerDocumento {
     @Value("\${ssw.url}")
     private lateinit var baseUrl: String
 

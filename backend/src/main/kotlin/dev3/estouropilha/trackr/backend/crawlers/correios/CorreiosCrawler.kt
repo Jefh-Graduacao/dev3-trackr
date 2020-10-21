@@ -5,16 +5,16 @@ import dev3.estouropilha.trackr.backend.models.Entrega
 import dev3.estouropilha.trackr.backend.models.Movimentacao
 import org.jsoup.Jsoup
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.stereotype.Service
+import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-@Service
+@Component
 class CorreiosCrawler : CrawlerCodigo {
     @Value("\${ssw.url}")
     private lateinit var baseUrl: String
 
-    override fun consultarEntregas(codigoRastreio: String): Entrega {
+    override fun consultarEntrega(codigoRastreio: String): Entrega {
         val movimentacoes = Jsoup.connect("https://www2.correios.com.br/sistemas/rastreamento/ctrl/ctrlRastreamento.cfm")
                 .data("acao", "track")
                 .data("objetos", codigoRastreio)
@@ -36,7 +36,7 @@ class CorreiosCrawler : CrawlerCodigo {
                             lbEvent.select("strong").text(),
                             LocalDateTime.parse(data, DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")),
                             local,
-                            Regex("(?<=<br>)[\\s\\S]*").find(lbEvent.html())?.groupValues?.first() ?: ""
+                            Regex("(?<=<br>)[\\s\\S]*").find(lbEvent.html())?.groupValues?.first()?.trim() ?: ""
                     )
                 }
 

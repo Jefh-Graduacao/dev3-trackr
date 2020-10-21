@@ -1,8 +1,9 @@
 package dev3.estouropilha.trackr.backend.controllers
 
 import dev3.estouropilha.trackr.backend.dto.EntregaDto
-import dev3.estouropilha.trackr.backend.dto.MovimentacaoDto
 import dev3.estouropilha.trackr.backend.dto.RastreioDocumentoDto
+import dev3.estouropilha.trackr.backend.enumeration.TipoCrawlerPorCodigoEnum
+import dev3.estouropilha.trackr.backend.mappers.EntregasMapper
 import dev3.estouropilha.trackr.backend.service.EntregasService
 import io.swagger.annotations.Api
 import org.springframework.http.HttpStatus
@@ -29,12 +30,7 @@ class EntregasController(private val entregasService: EntregasService) {
         }
         return ok(entregasService.consultarEntregasPorCpf(cpf)
                 .map {
-                    EntregaDto(cpf,
-                            it.movimentacoes
-                                    .sortedByDescending { mov -> mov.data }
-                                    .map { movimentacao ->
-                                        MovimentacaoDto(movimentacao.titulo, movimentacao.data, movimentacao.unidade, movimentacao.detalhes)
-                                    }, "código")
+                    EntregasMapper.map(it, cpf, "")
                 }
         )
     }
@@ -44,5 +40,15 @@ class EntregasController(private val entregasService: EntregasService) {
     fun vincularCodigoDeRastreioADocumento(@RequestBody rastreioDocumentoDto: RastreioDocumentoDto): ResponseEntity<List<EntregaDto>> {
         entregasService.gravarVinculoRastreioDocumento(rastreioDocumentoDto)
         return created(URI.create(format("/entregas/%s", rastreioDocumentoDto.numeroDocumento))).build()
+    }
+
+    @GetMapping("/correios/{codigoRastreio}/")
+    @CrossOrigin(origins = ["http://localhost:8081", "https://trackr.wtf"])
+    fun consultarCorreios(@PathVariable codigoRastreio: String): ResponseEntity<EntregaDto> {
+        return ok(EntregasMapper.map(
+                entregasService.consultarEntregasPorCodigoRastreioEOrigem(codigoRastreio, TipoCrawlerPorCodigoEnum.CORREIOS),
+                "",
+                codigoRastreio)
+        )
     }
 }

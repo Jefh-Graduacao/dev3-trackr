@@ -1,15 +1,12 @@
 package dev3.estouropilha.trackr.backend.controllers
 
 import dev3.estouropilha.trackr.backend.crawlers.correios.CorreiosCrawler
-import dev3.estouropilha.trackr.backend.dto.EntregaDto
-import dev3.estouropilha.trackr.backend.dto.MovimentacaoDto
 import dev3.estouropilha.trackr.backend.dto.RastreioDocumentoDto
 import dev3.estouropilha.trackr.backend.enumeration.TipoCrawlerPorCodigoEnum.CORREIOS
 import dev3.estouropilha.trackr.backend.helpers.BaseIntegrationTest
 import dev3.estouropilha.trackr.backend.helpers.LIMPAR_TABELAS
 import dev3.estouropilha.trackr.backend.models.Entrega
 import dev3.estouropilha.trackr.backend.models.Movimentacao
-import io.swagger.annotations.ApiModelProperty
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.`when`
 import org.springframework.boot.test.mock.mockito.MockBean
@@ -17,9 +14,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.context.jdbc.Sql
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
-import java.time.LocalDateTime.now
 import java.time.LocalDateTime.of
 
 @Sql(scripts = [LIMPAR_TABELAS], executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
@@ -53,7 +48,7 @@ internal class EntregasControllerIntegrationTest : BaseIntegrationTest() {
     @Test
     fun `Informar CPF valido deve retornar entregas existentes contendo as vinculadas ao CPF`() {
         //TODO remover quando a resposta estiver mockada via wiremock
-        `when`(correiosCrawler.consultarEntregas("1234-ABC"))
+        `when`(correiosCrawler.consultarEntrega("1234-ABC"))
                 .thenReturn(Entrega(listOf((Movimentacao("a", of(2020,10,18,17,1),
                         "b", "c")))))
 
@@ -65,7 +60,7 @@ internal class EntregasControllerIntegrationTest : BaseIntegrationTest() {
                 .andExpect(status().isOk)
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$[1].cpf").value("12345678999"))
-                .andExpect(jsonPath("$[1].codigo").value("código"))
+                .andExpect(jsonPath("$[1].codigo").value(""))
                 .andExpect(jsonPath("$[1].movimentacoes[0].titulo").value("a"))
                 .andExpect(jsonPath("$[1].movimentacoes[0].dataHora").value("2020-10-18T17:01:00"))
                 .andExpect(jsonPath("$[1].movimentacoes[0].local").value("b"))
