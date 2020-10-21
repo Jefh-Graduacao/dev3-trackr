@@ -1,14 +1,20 @@
-package dev3.estouropilha.trackr.backend.crawlers
+package dev3.estouropilha.trackr.backend.crawlers.correios
 
+import dev3.estouropilha.trackr.backend.crawlers.CrawlerCodigo
 import dev3.estouropilha.trackr.backend.models.Entrega
 import dev3.estouropilha.trackr.backend.models.Movimentacao
 import org.jsoup.Jsoup
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.regex.Pattern
 
-class CorreiosCrawler {
-    fun consultarEntrega(codigoRastreio: String): Entrega {
+@Component
+class CorreiosCrawler : CrawlerCodigo {
+    @Value("\${ssw.url}")
+    private lateinit var baseUrl: String
+
+    override fun consultarEntrega(codigoRastreio: String): Entrega {
         val movimentacoes = Jsoup.connect("https://www2.correios.com.br/sistemas/rastreamento/ctrl/ctrlRastreamento.cfm")
                 .data("acao", "track")
                 .data("objetos", codigoRastreio)
@@ -33,7 +39,7 @@ class CorreiosCrawler {
                             Regex("(?<=<br>)[\\s\\S]*").find(lbEvent.html())?.groupValues?.first()?.trim() ?: ""
                     )
                 }
-        
+
         return Entrega(movimentacoes)
     }
 }
