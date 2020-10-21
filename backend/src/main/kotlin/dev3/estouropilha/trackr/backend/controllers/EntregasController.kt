@@ -22,7 +22,7 @@ class EntregasController(private val entregasService: EntregasService) {
     private val cpfRegex = "^\\d{11}$"
 
     @GetMapping("/{cpf}")
-    @CrossOrigin(origins = ["http://localhost:8081", "https://trackr.wtf"])
+    @CrossOrigin(origins = ["http://localhost:8081", "https://trackr.wtf", "https://trackr-dev.azurewebsites.net"])
     fun consultarPorCpf(@PathVariable("cpf") cpf: String): ResponseEntity<List<EntregaDto>> {
 
         if (!Regex(cpfRegex).matches(cpf)) {
@@ -36,14 +36,14 @@ class EntregasController(private val entregasService: EntregasService) {
     }
 
     @PostMapping
-    @CrossOrigin(origins = ["http://localhost:8081", "https://trackr.wtf"])
+    @CrossOrigin(origins = ["http://localhost:8081", "https://trackr.wtf", "https://trackr-dev.azurewebsites.net"])
     fun vincularCodigoDeRastreioADocumento(@RequestBody rastreioDocumentoDto: RastreioDocumentoDto): ResponseEntity<List<EntregaDto>> {
         entregasService.gravarVinculoRastreioDocumento(rastreioDocumentoDto)
         return created(URI.create(format("/entregas/%s", rastreioDocumentoDto.numeroDocumento))).build()
     }
 
     @GetMapping("/correios/{codigoRastreio}/")
-    @CrossOrigin(origins = ["http://localhost:8081", "https://trackr.wtf"])
+    @CrossOrigin(origins = ["http://localhost:8081", "https://trackr.wtf", "https://trackr-dev.azurewebsites.net"])
     fun consultarCorreios(@PathVariable codigoRastreio: String): ResponseEntity<EntregaDto> {
         return ok(EntregasMapper.map(
                 entregasService.consultarEntregasPorCodigoRastreioEOrigem(codigoRastreio, TipoCrawlerPorCodigoEnum.CORREIOS),
