@@ -9,4 +9,3 @@ data class EntregaDto(
         @field:ApiModelProperty(example = "ABCXD-1234")
         val codigo: String
 )
-
