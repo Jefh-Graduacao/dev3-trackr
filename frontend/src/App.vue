@@ -43,18 +43,17 @@ export default Vue.extend({
       } else {
         const vueSelf = this;
 
-        const url = `${this.getURL(obj[0])}/${obj[1]}`;
-        if (obj[0] == 1) {
-          console.log("TIPO DE CONSULTA CORREIOS...........endpoint back??");
-          alert("opa falta o endpoint");
-          return;
-        }
+        const url = `${this.getURL(obj[0])}/${obj[1]}/`;
         this.$http.get(url).then(
           function (response) {
             if (response.status == 200) {
               vueSelf.errorSearch = false;
-              if (response.data && response.data.length > 0) {
-                vueSelf.rastreios = response.data;
+              if (response.data) {
+                if (obj[0] == 0 && response.data.length > 0) {
+                  vueSelf.rastreios = response.data;
+                } else if (obj[0] == 1) {
+                  vueSelf.rastreios = [response.data];
+                }
               } else {
                 vueSelf.errorSearch = true;
                 vueSelf.rastreios = [];
@@ -81,7 +80,7 @@ export default Vue.extend({
           return `${process.env.VUE_APP_URL_BACKEND}/entregas/`;
         case 1:
           //Por Correios
-          return `${process.env.VUE_APP_URL_BACKEND}/entregas/?`;
+          return `${process.env.VUE_APP_URL_BACKEND}/entregas/correios`;
         default:
           break;
       }

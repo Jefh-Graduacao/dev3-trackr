@@ -5,19 +5,20 @@
 </template>
 
 <script lang="ts">
-import Vue, { PropType } from 'vue'
+import Vue, { PropType } from "vue";
 
 export default Vue.extend({
   name: "Botao",
-  components: { },
+  components: {},
   props: {
     tipo: String,
-    onClick: Function
-  }
-})
+    onClick: Function,
+  },
+});
 
 export enum TipoBotao {
-  Primario, Secundario
+  Primario,
+  Secundario,
 }
 </script>
 
@@ -31,7 +32,8 @@ export enum TipoBotao {
   color: var(--btn-color, #000);
   background: var(--btn-bg, #fff);
 
-  border: var(--btn-border-width) var(--btn-border-style) var(--btn-border-color);
+  border: var(--btn-border-width) var(--btn-border-style)
+    var(--btn-border-color);
   border-radius: 4px;
 }
 
@@ -50,6 +52,6 @@ export enum TipoBotao {
 .btn-terciario {
   --btn-color: white;
   --btn-bg: black;
-  --btn-border-color: #CCC;
+  --btn-border-color: #ccc;
 }
 </style>
