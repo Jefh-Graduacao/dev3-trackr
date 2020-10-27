@@ -42,13 +42,20 @@ class EntregasController(private val entregasService: EntregasService) {
         return created(URI.create(format("/entregas/%s", rastreioDocumentoDto.numeroDocumento))).build()
     }
 
-    @GetMapping("/correios/{codigoRastreio}/")
+    @GetMapping("/{origem}/{codigoRastreio}")
     @CrossOrigin(origins = ["http://localhost:8081", "https://trackr.wtf", "https://trackr-dev.azurewebsites.net"])
-    fun consultarCorreios(@PathVariable codigoRastreio: String): ResponseEntity<EntregaDto> {
+    fun consultarCorreios(@PathVariable codigoRastreio: String, @PathVariable origem: TipoCrawlerPorCodigoEnum):
+            ResponseEntity<EntregaDto> {
         return ok(EntregasMapper.map(
-                entregasService.consultarEntregasPorCodigoRastreioEOrigem(codigoRastreio, TipoCrawlerPorCodigoEnum.CORREIOS),
+                entregasService.consultarEntregasPorCodigoRastreioEOrigem(codigoRastreio, origem),
                 "",
                 codigoRastreio)
         )
+    }
+
+    @GetMapping("/origens")
+    @CrossOrigin(origins = ["http://localhost:8081", "https://trackr.wtf", "https://trackr-dev.azurewebsites.net"])
+    fun consultarOrigens(): ResponseEntity<List<TipoCrawlerPorCodigoEnum>> {
+        return ok(TipoCrawlerPorCodigoEnum.values().toList())
     }
 }
