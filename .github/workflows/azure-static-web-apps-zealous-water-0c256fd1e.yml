@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main
-    paths-ignore:
-      - 'backend/**'
     paths:
       - 'frontend/src/**'
       - 'frontend/public/**'
@@ -14,8 +12,6 @@ on:
     types: [opened, synchronize, reopened, closed]
     branches:
       - main
-    paths-ignore:
-      - 'backend/**'
     paths:
       - 'frontend/src/**'
       - 'frontend/public/**'

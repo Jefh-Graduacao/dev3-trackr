@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar sticky-top flex-md-nowrap shadow bg-nav">
-    <a class="navbar-brand col-md-2 col-lg-1 mr-0 px-3" href="#">{{ nome }}</a>
+    <a class="navbar-brand col-md-2 col-lg-1 mr-0 px-3" href="/">{{ nome }}</a>
     <span class="purchase-status__icon col-md-1 col-lg-1 icon-position">
       <div class="">
         <svg
