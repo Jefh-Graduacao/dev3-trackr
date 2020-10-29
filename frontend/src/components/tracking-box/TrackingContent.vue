@@ -5,6 +5,11 @@
       @close="showModal = false"
       :movimentacoes="item.movimentacoes"
     />
+    <RegisterModal
+      v-if="showModalRegister"
+      :rastreio="rastreio"
+      @close="showModalRegister = false"
+    ></RegisterModal>
     <div class="flex-teste2">
       <TrackingContentLogo
         :title="item.movimentacoes[0].titulo"
@@ -41,6 +46,7 @@
     </div>
     <div class="tracking-buttons">
       <Botao tipo="primario" :onClick="click"> Ver detalhes </Botao>
+      <Botao v-if="registrar" tipo="primario" :onClick="opa"> Registrar </Botao>
     </div>
   </div>
 </template>
@@ -50,21 +56,36 @@ import Vue from "vue";
 import Botao from "../base/Botao.vue";
 import TrackingDetailsModal from "./TrackingDetailsModal.vue";
 import TrackingContentLogo from "./TrackingContentLogo.vue";
+import RegisterModal from "../base/RegisterModal.vue";
 
 export default Vue.extend({
   name: "TrackingContent",
-  components: { Botao, TrackingDetailsModal, TrackingContentLogo },
+  components: {
+    Botao,
+    TrackingDetailsModal,
+    TrackingContentLogo,
+    RegisterModal,
+  },
   props: {
     item: Object,
+    registrar: {
+      required: true,
+      type: Boolean,
+    },
+    rastreio: String,
   },
   methods: {
     click: function () {
       this.showModal = true;
     },
+    opa: function () {
+      this.showModalRegister = true;
+    },
   },
   data: function () {
     return {
       showModal: false,
+      showModalRegister: false,
     };
   },
 });

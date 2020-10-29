@@ -5,45 +5,27 @@
         <div class="tracking-modal-container">
           <div class="tracking-modal-header">
             <slot name="header">
-              <h3>Detalhes da entrega</h3>
-              <strong> {{ movimentacoes.length }} movimentações </strong>
+              <h3>Registrar Rastreio para Documento</h3>
             </slot>
           </div>
 
           <div class="tracking-modal-body">
             <slot name="body">
-              <div
-                class="tracking-mov"
-                v-for="(item, index) in movimentacoes"
-                :key="index"
-                :item="item"
-              >
-                <h5>
-                  {{ item.titulo }}
-                </h5>
-
-                {{ item.dataHora }}<br />
-                {{ item.situacao }}<br />
-                {{ item.local }}<br />
+              <div class="tracking-mov">
+                <h5>Rastreio '{{ rastreio }}'</h5>
               </div>
+              <input type="text" />
             </slot>
           </div>
 
           <div class="tracking-modal-footer">
-            <div>
-              {{ movimentacoes.length }} movimentações registradas com início em
-              <strong>
-                {{
-                  new Date(movimentacoes[0].dataHora).toLocaleString("pt-BR", {
-                    year: "numeric",
-                    month: "numeric",
-                    day: "numeric",
-                    hour: "numeric",
-                    minute: "numeric",
-                  })
-                }}
-              </strong>
-            </div>
+            <Botao
+              class="tracking-modal-default-button"
+              tipo="secundario"
+              :onClick="opa"
+            >
+              Salvar
+            </Botao>
             <Botao
               class="tracking-modal-default-button"
               tipo="terciario"
@@ -67,11 +49,18 @@ export default {
   name: "Modal",
   components: { Botao },
   props: {
-    movimentacoes: Array,
+   rastreio: {
+      required: true,
+      type: String,
+    },
   },
   methods: {
     close() {
-      this.$emit("close")
+      this.$emit("close");
+    },
+    opa() {
+      alert('Chamar url de registrar');
+      this.close();
     },
   },
 };
@@ -98,8 +87,8 @@ export default {
 }
 
 .tracking-modal-container {
-  width: 60%;
-  max-height: 80%;
+  width: 40%;
+  max-height: 10%;
   margin: 0px auto;
   padding: 20px 30px;
   background-color: #fff;
@@ -107,7 +96,7 @@ export default {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
   overflow-y: scroll;
-  height: 600px;
+  height: 300px;
   display: flex;
   flex-direction: column;
 }

@@ -13,12 +13,9 @@
           :items="rastreios"
           :cpf="searchValue"
           @emit-value-id="emitClick"
+          :registrar="botaoRegistrar"
+          :rastreio="searchValue"
         ></Content>
-        <ContentDetails
-          v-if="details"
-          :item="rastreios[0]"
-          :cpf="searchValue"
-        ></ContentDetails>
       </div>
     </div>
   </div>
@@ -43,7 +40,7 @@ export default Vue.extend({
       } else {
         const vueSelf = this;
 
-        const url = `${this.getURL(obj[0])}/${obj[1]}/`;
+        const url = `${this.getURL(obj[0])}/${obj[1]}`;
         this.$http.get(url).then(
           function (response) {
             if (response.status == 200) {
@@ -77,10 +74,12 @@ export default Vue.extend({
       switch (id) {
         case 0:
           //Por CPF
+          this.botaoRegistrar = false;
           return `${process.env.VUE_APP_URL_BACKEND}/entregas/`;
         case 1:
           //Por Correios
-          return `${process.env.VUE_APP_URL_BACKEND}/entregas/correios`;
+          this.botaoRegistrar = true;
+          return `${process.env.VUE_APP_URL_BACKEND}/entregas/CORREIOS`;
         default:
           break;
       }
@@ -91,6 +90,7 @@ export default Vue.extend({
       details: false,
       errorSearch: false,
       searchValue: "",
+      botaoRegistrar: false,
       rastreios: new Array(),
       mensagemError: "Não há resultados para a consulta de:",
       rastreiosTemp: [
