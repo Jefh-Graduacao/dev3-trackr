@@ -5,16 +5,24 @@
         <div class="tracking-modal-container">
           <div class="tracking-modal-header">
             <slot name="header">
-              <h3>Registrar Rastreio para Documento</h3>
+              <h3>Registrar para Documento</h3>
             </slot>
           </div>
 
           <div class="tracking-modal-body">
             <slot name="body">
               <div class="tracking-mov">
-                <h5>Rastreio '{{ rastreio }}'</h5>
+                <h5>Rastreio: {{ rastreio }}</h5>
               </div>
-              <input type="text" />
+              <input
+                id="formSearch"
+                type="text"
+                placeholder="Informe o numero do Documento"
+                aria-label=""
+                class="form-control form-control-underlined border-warning"
+                v-model="documento"
+                maxlength="25"
+              />
             </slot>
           </div>
 
@@ -22,7 +30,7 @@
             <Botao
               class="tracking-modal-default-button"
               tipo="secundario"
-              :onClick="opa"
+              :onClick="register"
             >
               Salvar
             </Botao>
@@ -48,6 +56,11 @@ import Botao from "../base/Botao.vue";
 export default {
   name: "Modal",
   components: { Botao },
+  data: function () {
+     return {
+       documento: ""
+     }
+  },
   props: {
    rastreio: {
       required: true,
@@ -58,9 +71,24 @@ export default {
     close() {
       this.$emit("close");
     },
-    opa() {
-      alert('Chamar url de registrar');
-      this.close();
+    register() {
+      var url = `${process.env.VUE_APP_URL_BACKEND}/entregas/`;
+      var body = {
+        numeroDocumento: this.documento,
+        codigoRastreio: "OJ696166990BR",
+        origem: "CORREIOS"
+      };
+      console.log(body);
+      console.log(url);
+      this.$http.post(url, body).then(
+        function () {
+          alert("Rastreio foi vinculado ao documento com sucesso!")
+        },
+        function () {
+          alert("Problema ao realizar vinculo de documento e rastreio.")
+        }
+      );
+       this.close();
     },
   },
 };
