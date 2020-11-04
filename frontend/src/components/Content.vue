@@ -10,6 +10,8 @@
         :item="item"
         :id="index"
         @emit-value-id="emitClick"
+        :registrar="registrar"
+        :rastreio="rastreio"
       ></TrackingItem>
     </div>
   </main>
@@ -17,7 +19,7 @@
 
 <script>
 import Vue from "vue";
-import TrackingItem from "./tracking-box/TrackingItem"
+import TrackingItem from "./tracking-box/TrackingItem";
 
 export default Vue.extend({
   name: "Content",
@@ -25,6 +27,11 @@ export default Vue.extend({
   props: {
     items: Array,
     cpf: String,
+    registrar: {
+      required: true,
+      type: Boolean,
+    },
+    rastreio: String,
   },
   methods: {
     emitClick(id) {

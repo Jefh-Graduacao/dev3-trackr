@@ -1,6 +1,10 @@
 <template>
   <div id="main">
-    <NavBar nome="Trackr" @emit-value-bar="getValueBar"></NavBar>
+    <NavBar
+      nome="Trackr"
+      @emit-value-bar="getValueBar"
+      :origins="typesCrawler"
+    ></NavBar>
     <div class="container-fluid">
       <div class="row">
         <!-- <MenuBar></MenuBar> -->
@@ -13,12 +17,9 @@
           :items="rastreios"
           :cpf="searchValue"
           @emit-value-id="emitClick"
+          :registrar="botaoRegistrar"
+          :rastreio="searchValue"
         ></Content>
-        <ContentDetails
-          v-if="details"
-          :item="rastreios[0]"
-          :cpf="searchValue"
-        ></ContentDetails>
       </div>
     </div>
   </div>
@@ -33,25 +34,46 @@ import Content from "./components/Content.vue";
 export default Vue.extend({
   name: "App",
   components: { NavBar, Content },
+  mounted: function () {
+    const vueSelf = this;
+    //Busca os tipos
+    const url = `${process.env.VUE_APP_URL_BACKEND}/entregas/origens`;
+    this.$http.get(url).then(
+      function (response) {
+        if (response.status == 200) {
+          if (response.data) {
+            var tempOrigens = response.data;
+            tempOrigens.unshift("CPF");
+            vueSelf.typesCrawler = tempOrigens;
+          } else {
+            console.log("Busca de origens vazia...");
+          }
+        }
+      },
+      function () {
+        alert("Falha ao realizar busca de origens.");
+      }
+    );
+  },
   methods: {
-    getValueBar(obj: Object[]) {
+    getValueBar(obj: String[]) {
       this.details = false;
-      if (obj[1] == 41) {
+      if (obj[1] == "41") {
         this.errorSearch = false;
         this.rastreios = this.rastreiosTemp;
         this.searchValue = obj[1].toString();
       } else {
         const vueSelf = this;
 
-        const url = `${this.getURL(obj[0])}/${obj[1]}/`;
+        const url = this.getURL(obj[0], obj[1]);
         this.$http.get(url).then(
           function (response) {
             if (response.status == 200) {
               vueSelf.errorSearch = false;
               if (response.data) {
-                if (obj[0] == 0 && response.data.length > 0) {
+                if (obj[0] == "CPF" && response.data.length > 0) {
                   vueSelf.rastreios = response.data;
-                } else if (obj[0] == 1) {
+                } else {
                   vueSelf.rastreios = [response.data];
                 }
               } else {
@@ -73,16 +95,16 @@ export default Vue.extend({
         this.searchValue = obj[1].toString();
       }
     },
-    getURL(id: Object) {
-      switch (id) {
-        case 0:
+    getURL(type: String, search: String) {
+      switch (type) {
+        case "CPF":
           //Por CPF
-          return `${process.env.VUE_APP_URL_BACKEND}/entregas/`;
-        case 1:
-          //Por Correios
-          return `${process.env.VUE_APP_URL_BACKEND}/entregas/correios`;
+          this.botaoRegistrar = false;
+          return `${process.env.VUE_APP_URL_BACKEND}/entregas/${search}`;
         default:
-          break;
+          //DEFAULTs
+          this.botaoRegistrar = true;
+          return `${process.env.VUE_APP_URL_BACKEND}/entregas/${type}/${search}`;
       }
     },
   },
@@ -91,8 +113,10 @@ export default Vue.extend({
       details: false,
       errorSearch: false,
       searchValue: "",
+      botaoRegistrar: false,
       rastreios: new Array(),
       mensagemError: "Não há resultados para a consulta de:",
+      typesCrawler: null,
       rastreiosTemp: [
         {
           cpf: "03820790004",

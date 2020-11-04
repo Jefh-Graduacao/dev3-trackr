@@ -13,8 +13,11 @@
           })}`"
       />
 
-      <TrackingContent :item="item" />
-
+      <TrackingContent
+        :item="item"
+        :registrar="registrar"
+        :rastreio="rastreio"
+      />
     </div>
   </div>
 </template>
@@ -23,19 +26,24 @@
 import Vue from "vue";
 
 import TrackingHeading from "./TrackingHeading.vue";
-import TrackingContent from "./TrackingContent.vue"
+import TrackingContent from "./TrackingContent.vue";
 
 export default Vue.extend({
   name: "TrackingItem",
   components: { TrackingHeading, TrackingContent },
   props: {
+    registrar: {
+      required: true,
+      type: Boolean,
+    },
     item: {
       type: Object,
       required: true,
     },
     id: Number,
+    rastreio: String,
   },
-  methods: { },
+  methods: {},
 });
 </script>
 
