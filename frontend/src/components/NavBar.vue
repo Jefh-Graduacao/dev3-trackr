@@ -69,7 +69,7 @@
     <!-- End -->
     <ul class="navbar-nav px-3">
       <li class="nav-item text-nowrap">
-        <a class="nav-link" href="#">Sair</a>
+        <!-- <a class="nav-link" href="#">Sair</a> -->
       </li>
     </ul>
   </nav>
