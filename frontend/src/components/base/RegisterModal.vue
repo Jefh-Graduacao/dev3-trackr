@@ -75,11 +75,11 @@ export default {
       var url = `${process.env.VUE_APP_URL_BACKEND}/entregas/`;
       var body = {
         numeroDocumento: this.documento,
-        codigoRastreio: "OJ696166990BR",
+        codigoRastreio: this.rastreio,
         origem: "CORREIOS"
       };
-      console.log(body);
-      console.log(url);
+      // console.log(body);
+      // console.log(url);
       this.$http.post(url, body).then(
         function () {
           alert("Rastreio foi vinculado ao documento com sucesso!")
