@@ -1,6 +1,7 @@
 package dev3.estouropilha.trackr.backend.crawlers.correios
 
 import dev3.estouropilha.trackr.backend.crawlers.CrawlerCodigo
+import dev3.estouropilha.trackr.backend.enumeration.TipoCrawlerPorCodigoEnum
 import dev3.estouropilha.trackr.backend.models.Entrega
 import dev3.estouropilha.trackr.backend.models.Movimentacao
 import org.jsoup.Jsoup
@@ -40,6 +41,6 @@ class CorreiosCrawler : CrawlerCodigo {
                     )
                 }
 
-        return Entrega(movimentacoes)
+        return Entrega(movimentacoes, TipoCrawlerPorCodigoEnum.CORREIOS.name)
     }
 }
