@@ -44,22 +44,22 @@
     <!-- Underlined search bars -->
     <div class="input-group">
       <div class="input-group-prepend">
-        <select class="custom-select my-select" v-model="tipoID">
+        <select class="custom-select my-select" v-model="selectedType">
           <option
-            v-for="tti in tipoConsulta"
+            v-for="tti in origins"
             v-bind:key="tti"
-            :label="tti.descricao"
-            :title="tti.descricao"
-            :value="tti.id"
+            :label="tti"
+            :title="tti"
+            :value="tti"
           >
-            {{ tti.descricao }}
+            {{ tti }}
           </option>
         </select>
       </div>
       <input
         id="formSearch"
         type="text"
-        :placeholder="consultaTipo().placeholder"
+        :placeholder="consultaDescricao()"
         aria-label="CPF"
         class="form-control form-control-underlined border-warning"
         v-on:keyup.enter="emitValue()"
@@ -69,7 +69,7 @@
     <!-- End -->
     <ul class="navbar-nav px-3">
       <li class="nav-item text-nowrap">
-        <a class="nav-link" href="#">Sair</a>
+        <!-- <a class="nav-link" href="#">Sair</a> -->
       </li>
     </ul>
   </nav>
@@ -83,11 +83,12 @@ export default Vue.extend({
   components: {},
   props: {
     nome: String,
+    origins: Array,
   },
   data() {
     return {
       searchData: null,
-      tipoID: 0,
+      selectedType: "CPF",
       tipoConsulta: [
         {
           id: 0,
@@ -104,17 +105,24 @@ export default Vue.extend({
   },
   methods: {
     emitValue() {
-      this.$emit("emit-value-bar", [this.tipoID, this.searchData]);
+      this.$emit("emit-value-bar", [this.selectedType, this.searchData]);
       this.searchData = null;
     },
-    consultaTipo() {
-      return this.tipoConsulta[this.tipoID];
+    consultaDescricao() {
+      switch (this.selectedType) {
+        case "CPF":
+          return "Consulta por CPF";
+        case "CORREIOS":
+          return "Consulta por código do Correios";
+        default:
+          return "Consulta por " + this.selectedType;
+      }
     },
   },
 });
 </script>
 
-<style>
+<style lang="css" scoped>
 .purchase-status__icon {
   position: relative;
   height: 18px;
