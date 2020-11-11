@@ -30,12 +30,15 @@ import Vue from "vue";
 // import MenuBar from "./components/MenuBar.vue";
 import NavBar from "./components/NavBar.vue";
 import Content from "./components/Content.vue";
+// Import stylesheet
+import "vue-loading-overlay/dist/vue-loading.css";
 
 export default Vue.extend({
   name: "App",
   components: { NavBar, Content },
   mounted: function () {
     const vueSelf = this;
+    const loader = vueSelf.loader();
     //Busca os tipos
     const url = `${process.env.VUE_APP_URL_BACKEND}/entregas/origens`;
     this.$http.get(url).then(
@@ -49,15 +52,38 @@ export default Vue.extend({
             console.log("Busca de origens vazia...");
           }
         }
+        loader.hide();
       },
       function () {
         alert("Falha ao realizar busca de origens.");
+        loader.hide();
       }
     );
   },
   methods: {
+    //Configs para loader:
+    //https://www.npmjs.com/package/vue-loading-overlay
+    loader() {
+      const loader = this.$loading.show({
+        // Optional parameters
+        //canCancel: true,
+        onCancel: this.onCancel,
+        color: "#a61212",
+        loader: "dots",
+      });
+      return loader;
+      // simulate AJAX
+      // setTimeout(() => {
+      //   loader.hide();
+      // }, 5000);
+    },
+
+    onCancel() {
+      console.log("User cancelled the loader.");
+    },
     getValueBar(obj: String[]) {
       this.details = false;
+      const loader = this.loader();
       if (obj[1] == "41") {
         this.errorSearch = false;
         this.rastreios = this.rastreiosTemp;
@@ -83,6 +109,7 @@ export default Vue.extend({
                   "Não há resultados para a consulta de " + vueSelf.searchValue;
               }
             }
+            loader.hide();
           },
           function () {
             vueSelf.errorSearch = true;
@@ -90,6 +117,7 @@ export default Vue.extend({
             vueSelf.mensagemError =
               "Informe um dado válido para realizar a Consulta";
             alert("Dado informado não é válido para esta consulta.");
+            loader.hide();
           }
         );
         this.searchValue = obj[1].toString();

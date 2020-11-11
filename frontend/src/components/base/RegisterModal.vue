@@ -68,10 +68,27 @@ export default {
     },
   },
   methods: {
+    //Configs para loader:
+    //https://www.npmjs.com/package/vue-loading-overlay
+    loader() {
+      const loader = this.$loading.show({
+        // Optional parameters
+        //canCancel: true,
+        onCancel: this.onCancel,
+        color: "#a61212",
+        loader: "dots",
+      });
+      return loader;
+      // simulate AJAX
+      // setTimeout(() => {
+      //   loader.hide();
+      // }, 5000);
+    },
     close() {
       this.$emit("close");
     },
     register() {
+      const loader = this.loader();
       var url = `${process.env.VUE_APP_URL_BACKEND}/entregas/`;
       var body = {
         numeroDocumento: this.documento,
@@ -83,9 +100,11 @@ export default {
       this.$http.post(url, body).then(
         function () {
           alert("Rastreio foi vinculado ao documento com sucesso!")
+          loader.hide();
         },
         function () {
           alert("Problema ao realizar vinculo de documento e rastreio.")
+          loader.hide();
         }
       );
        this.close();
