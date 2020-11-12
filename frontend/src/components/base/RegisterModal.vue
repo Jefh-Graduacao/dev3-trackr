@@ -22,6 +22,7 @@
                 class="form-control form-control-underlined border-warning"
                 v-model="documento"
                 maxlength="25"
+                v-on:keyup.enter="register()"
               />
             </slot>
           </div>
@@ -72,17 +73,11 @@ export default {
     //https://www.npmjs.com/package/vue-loading-overlay
     loader() {
       const loader = this.$loading.show({
-        // Optional parameters
-        //canCancel: true,
         onCancel: this.onCancel,
         color: "#a61212",
         loader: "dots",
       });
       return loader;
-      // simulate AJAX
-      // setTimeout(() => {
-      //   loader.hide();
-      // }, 5000);
     },
     close() {
       this.$emit("close");
@@ -95,8 +90,6 @@ export default {
         codigoRastreio: this.rastreio,
         origem: "CORREIOS"
       };
-      // console.log(body);
-      // console.log(url);
       this.$http.post(url, body).then(
         function () {
           alert("Rastreio foi vinculado ao documento com sucesso!")
