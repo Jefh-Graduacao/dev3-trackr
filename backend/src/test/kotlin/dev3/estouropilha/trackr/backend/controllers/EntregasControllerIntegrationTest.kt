@@ -49,8 +49,8 @@ internal class EntregasControllerIntegrationTest : BaseIntegrationTest() {
     fun `Informar CPF valido deve retornar entregas existentes contendo as vinculadas ao CPF`() {
         //TODO remover quando a resposta estiver mockada via wiremock
         `when`(correiosCrawler.consultarEntrega("1234-ABC"))
-                .thenReturn(Entrega(listOf((Movimentacao("a", of(2020,10,18,17,1),
-                        "b", "c")))))
+                .thenReturn(Entrega(listOf((Movimentacao("a", of(2020, 10, 18, 17, 1),
+                        "b", "c"))), "CPF"))
 
         val rastreioDocumentoDto = RastreioDocumentoDto("12345678999", "1234-ABC", CORREIOS)
         inserirRastreioDocumento(rastreioDocumentoDto)
