@@ -1,6 +1,7 @@
 package dev3.estouropilha.trackr.backend.crawlers.ssw
 
 import dev3.estouropilha.trackr.backend.crawlers.CrawlerDocumento
+import dev3.estouropilha.trackr.backend.enumeration.TipoCrawlerPorDocumentoEnum
 import dev3.estouropilha.trackr.backend.models.Entrega
 import dev3.estouropilha.trackr.backend.models.Movimentacao
 import org.jsoup.Jsoup
@@ -43,7 +44,7 @@ class SswCrawler : CrawlerDocumento {
                                         detalhes
                                 )
                             }
-                    Entrega(detalhes)
+                    Entrega(detalhes, "CPF")
                 }
     }
 }
