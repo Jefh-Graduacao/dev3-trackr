@@ -89,18 +89,6 @@ export default Vue.extend({
     return {
       searchData: null,
       selectedType: "CPF",
-      tipoConsulta: [
-        {
-          id: 0,
-          descricao: "CPF",
-          placeholder: "Pesquisar por CPF",
-        },
-        {
-          id: 1,
-          descricao: "Correios",
-          placeholder: "Pesquisar por Código do Correios",
-        },
-      ],
     };
   },
   methods: {

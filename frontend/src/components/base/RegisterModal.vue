@@ -22,6 +22,7 @@
                 class="form-control form-control-underlined border-warning"
                 v-model="documento"
                 maxlength="25"
+                v-on:keyup.enter="register()"
               />
             </slot>
           </div>
@@ -68,24 +69,35 @@ export default {
     },
   },
   methods: {
+    //Configs para loader:
+    //https://www.npmjs.com/package/vue-loading-overlay
+    loader() {
+      const loader = this.$loading.show({
+        onCancel: this.onCancel,
+        color: "#a61212",
+        loader: "dots",
+      });
+      return loader;
+    },
     close() {
       this.$emit("close");
     },
     register() {
+      const loader = this.loader();
       var url = `${process.env.VUE_APP_URL_BACKEND}/entregas/`;
       var body = {
         numeroDocumento: this.documento,
         codigoRastreio: this.rastreio,
         origem: "CORREIOS"
       };
-      // console.log(body);
-      // console.log(url);
       this.$http.post(url, body).then(
         function () {
           alert("Rastreio foi vinculado ao documento com sucesso!")
+          loader.hide();
         },
         function () {
           alert("Problema ao realizar vinculo de documento e rastreio.")
+          loader.hide();
         }
       );
        this.close();
