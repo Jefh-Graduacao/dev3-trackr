@@ -5,6 +5,7 @@ import dev3.estouropilha.trackr.backend.enumeration.TipoCrawlerPorCodigoEnum
 import dev3.estouropilha.trackr.backend.models.Entrega
 import dev3.estouropilha.trackr.backend.models.Movimentacao
 import org.jsoup.Jsoup
+import org.jsoup.nodes.Element
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
@@ -32,12 +33,14 @@ class CorreiosCrawler : CrawlerCodigo {
                                     .filter { !it.isBlank() }
 
                     val lbEvent = tabela.select(".sroLbEvent")
+                    val titulo = lbEvent.select("strong").text()
+                    val detalhes = lbEvent.text().replace(titulo, "", false).trim()
 
                     Movimentacao(
-                            lbEvent.select("strong").text(),
+                            titulo,
                             LocalDateTime.parse(data, DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")),
                             local,
-                            Regex("(?<=<br>)[\\s\\S]*").find(lbEvent.html())?.groupValues?.first()?.trim() ?: ""
+                            detalhes
                     )
                 }
 
