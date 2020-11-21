@@ -1,40 +1,37 @@
 <template>
   <div id="main">
-    <NavBar
+    <NavBar2
       nome="Trackr"
       @emit-value-bar="getValueBar"
-      :origins="typesCrawler"
-    ></NavBar>
-    <div class="container-fluid">
-      <div class="row">
-        <!-- <MenuBar></MenuBar> -->
-        <h3 v-show="errorSearch">
-          <br />
-          <div class="center">{{ mensagemError }}</div>
-        </h3>
-        <Content
-          v-if="searchValue != null"
-          :items="rastreios"
-          :cpf="searchValue"
-          @emit-value-id="emitClick"
-          :registrar="botaoRegistrar"
-          :rastreio="searchValue"
-        ></Content>
-      </div>
+      :origens="typesCrawler"
+    ></NavBar2>
+    <div class="container-conteudo">
+      <h3 v-show="errorSearch">
+        <br />
+        <div class="center">{{ mensagemError }}</div>
+      </h3>
+      <Content
+        v-if="searchValue != null"
+        :items="rastreios"
+        :cpf="searchValue"
+        @emit-value-id="emitClick"
+        :registrar="botaoRegistrar"
+        :rastreio="searchValue"
+      ></Content>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import NavBar from "./components/NavBar.vue";
+import NavBar2 from "./components/NavBar2.vue";
 import Content from "./components/Content.vue";
 // Import stylesheet
 import "vue-loading-overlay/dist/vue-loading.css";
 
 export default Vue.extend({
   name: "App",
-  components: { NavBar, Content },
+  components: { NavBar2, Content },
   mounted: function () {
     const vueSelf = this;
     const loader = vueSelf.loader();
@@ -145,6 +142,20 @@ body {
   font-size: 13px;
   line-height: 20px;
   color: #333;
-  background: #f3f5f9;
+  background: #F3F5F9;
+}
+
+#main {
+  width: 100%;
+  min-height: 100%;
+  position: relative;
+}
+
+.container-conteudo {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
 }
 </style>

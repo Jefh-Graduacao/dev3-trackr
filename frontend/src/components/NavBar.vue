@@ -10,7 +10,7 @@
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          <image href="../assets/Trackr_LOGO.png" width="65px" height="60px" />
+          <image href="../assets/logo.png" width="65px" height="60px" />
         </svg>
       </div>
     </span>
