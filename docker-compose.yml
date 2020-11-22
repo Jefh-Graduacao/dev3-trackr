@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  frontend: 
+    container_name: frontend
+    build:
+      context: ./frontend/
+      dockerfile: Dockerfile
+    ports:
+      - 8081:80
+  
+  backend: 
+    container_name: backend
+    build:
+      context: backend/
+      dockerfile: Dockerfile
+    environment:
+      server.port: 80
+      spring.h2.console.settings.web-allow-others: "true"
+    ports:
+      - 8080:80
