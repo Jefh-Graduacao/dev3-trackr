@@ -88,10 +88,10 @@ A infraestrutura para desenvolvimento _backend_ (banco de dados) pode ser gerenc
     
     Para submeter a implementação da nova origem basta que seja enviado o Pull Request seguindo os seguintes passos:
     
-    * Primeiramente pensando na nova origem de dados, precisa-se definir se ela é consumida através de um código de rastreio ou número de documento, em seguida nova origem de dados deve ser incluida no respectivo **enum**: **TipoCrawlerPorCodigoEnum** ou **TipoCrawlerPorDocumentoEnum**;
+    * Primeiramente pensando na nova origem de dados, precisa-se definir se ela é consumida através de um código de rastreio ou número de documento, em seguida a nova origem de dados deve ser incluida no respectivo **enum**: **TipoCrawlerPorCodigoEnum** ou **TipoCrawlerPorDocumentoEnum**;
     * Após isso, no diretório **crawlers** deve ser criado um novo **service** para a nova origem, toda implementação específica deverá ficar nesse path. O novo **service**
     criado deve implementar a interface correspondente do tipo de origem: **CrawlerCodigo** ou **CrawlerDocumento**;
-    * Existe também um **service** para orquestrar as origens conforme a entrada, que chamaremos de **orquestrador**, nele deve se implementar o mapeamento verificando o **enum** de entrada para o **service** criado na etapa anterior, para isso será necessário adicionar o novo **service** como dependencia do **orquestrador** e então realizar o tratamento no **switch** para a nova origem de dados direcionando para o **service** específico criado na etapa anterior, os **orquestradores** específicos são: **CrawlerCodigoService** ou **CrawlerDocumentoService**.
+    * Existe também um **service** para orquestrar as origens conforme a entrada, que chamaremos de **orquestrador**, nele deve-se implementar o mapeamento do **enum** de entrada para o **service** criado na etapa anterior, para isso será necessário adicionar o novo **service** como dependencia do **orquestrador** e então realizar o tratamento no **switch** para a nova origem de dados direcionando para o **service** específico, os **orquestradores** específicos são: **CrawlerCodigoService** ou **CrawlerDocumentoService**.
 
     ##Mais
     
