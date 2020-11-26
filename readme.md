@@ -80,23 +80,25 @@ A infraestrutura para desenvolvimento _backend_ (banco de dados) pode ser gerenc
     ```
     
 # Como contribuir
-    A Estrutura do backend foi pensada para possibilitar facilmente a expansão de novas origem de dados, possuimos suporte para origens de dados que consumam as chaves de 'Código de rastreio' e 'Número de documento', sendo que cada um possui um coportamento próprio.
-    ##Por Código: 
-          O front adiciona essa nova opção como chave composta nas pesquisas e representa uma busca unitária por encomentas.O código pode ser posteriormete vinculado ao documento para que seja consultado também quando houver consultas em lote por documento.
-    ##Por Documento: 
-          Nessa opção serão consultados todas as origens de dado por documento para que seja montado o lote de encomendas que será inclído no dashboard.
     
-    Para submeter a implementação da nova origem basta que seja enviado o Pull Request seguindo os seguintes passos:
-    
-    * Primeiramente pensando na nova origem de dados, precisa-se definir se ela é consumida através de um código de rastreio ou número de documento, em seguida a nova origem de dados deve ser incluida no respectivo **enum**: **TipoCrawlerPorCodigoEnum** ou **TipoCrawlerPorDocumentoEnum**;
-    * Após isso, no diretório **crawlers** deve ser criado um novo **service** para a nova origem, toda implementação específica deverá ficar nesse path. O novo **service**
-    criado deve implementar a interface correspondente do tipo de origem: **CrawlerCodigo** ou **CrawlerDocumento**;
-    * Existe também um **service** para orquestrar as origens conforme a entrada, que chamaremos de **orquestrador**, nele deve-se implementar o mapeamento do **enum** de entrada para o **service** criado na etapa anterior, para isso será necessário adicionar o novo **service** como dependencia do **orquestrador** e então realizar o tratamento no **switch** para a nova origem de dados direcionando para o **service** específico, os **orquestradores** específicos são: **CrawlerCodigoService** ou **CrawlerDocumentoService**.
+A Estrutura do backend foi pensada para possibilitar facilmente a expansão de novas origem de dados, possuimos suporte para origens de dados que consumam as chaves de 'Código de rastreio' e 'Número de documento', sendo que cada um possui um coportamento próprio.
 
-    ##Mais
+## Por Código: 
+
+O front adiciona essa nova opção como chave composta nas pesquisas e representa uma busca unitária por encomentas.O código pode ser posteriormete vinculado ao documento para que seja consultado também quando houver consultas em lote por documento.
+
+## Por Documento: 
+Nessa opção serão consultados todas as origens de dado por documento para que seja montado o lote de encomendas que será inclído no dashboard.
     
-    * Apenas serão aceitas contribuições conforme os padrões de qualidade de código, incluindo **testes unitários** e práticas de **clean code**;
-    * Sobre a implementação dos crawlers, utilizamos a biblioteca Jsoup para extrair os dados, mas sinta-se a vontade para utilizar outras.
+Para submeter a implementação da nova origem basta que seja enviado o Pull Request seguindo os seguintes passos:
     
-# Outras funcionalidades para contribuição
-    * Expurgo de rastreios **por código** vinculados ao **documento**. Quando é realizado um vinculo do código de rastreio para o documento, toda vez que o documento for consultado esse rastreio vinculado **por código** será incluido na resposta, mas algum tempo após a entrega do mesmo a informação perde o valor e apenas polui o dashboard;
+  * Primeiramente pensando na nova origem de dados, precisa-se definir se ela é consumida através de um código de rastreio ou número de documento, em seguida a nova origem de dados deve ser incluida no respectivo **enum**: **TipoCrawlerPorCodigoEnum** ou **TipoCrawlerPorDocumentoEnum**;
+  * Após isso, no diretório **crawlers** deve ser criado um novo **service** para a nova origem, toda implementação específica deverá ficar nesse path. O novo **service** criado deve implementar a interface correspondente do tipo de origem: **CrawlerCodigo** ou **CrawlerDocumento**;
+  * Existe também um **service** para orquestrar as origens conforme a entrada, que chamaremos de **orquestrador**, nele deve-se implementar o mapeamento do **enum** de entrada para o **service** criado na etapa anterior, para isso será necessário adicionar o novo **service** como dependencia do **orquestrador** e então realizar o tratamento no **switch** para a nova origem de dados direcionando para o **service** específico, os **orquestradores** específicos são: **CrawlerCodigoService** ou **CrawlerDocumentoService**.
+
+### Mais   
+* Apenas serão aceitas contribuições conforme os padrões de qualidade de código, incluindo **testes unitários** e práticas de **clean code**;
+* Sobre a implementação dos crawlers, utilizamos a biblioteca Jsoup para extrair os dados, mas sinta-se a vontade para utilizar outras.
+    
+### Outras funcionalidades para contribuição
+* Expurgo de rastreios **por código** vinculados ao **documento**. Quando é realizado um vinculo do código de rastreio para o documento, toda vez que o documento for consultado esse rastreio vinculado **por código** será incluido na resposta, mas algum tempo após a entrega do mesmo a informação perde o valor e apenas polui o dashboard;
