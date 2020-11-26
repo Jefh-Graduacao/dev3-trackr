@@ -143,6 +143,7 @@ input {
   padding: 0 10px 0 15px;
   margin-left: 0;
   outline: none;
+  text-transform: uppercase;
 }
 
 .bt-pesquisa {
