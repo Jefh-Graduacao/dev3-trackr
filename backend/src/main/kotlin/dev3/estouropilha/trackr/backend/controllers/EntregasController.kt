@@ -32,6 +32,7 @@ class EntregasController(private val entregasService: EntregasService) {
                 .map {
                     EntregasMapper.map(it, cpf, "")
                 }
+                .sortedByDescending { it.movimentacoes.first().dataHora }
         )
     }
 
